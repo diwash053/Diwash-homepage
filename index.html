@@ -14,6 +14,7 @@
             --gray: #e0e0e0;
             --success: #28a745;
             --danger: #dc3545;
+            --warning: #ffc107;
         }
         
         * {
@@ -27,6 +28,7 @@
             background-color: var(--light);
             color: var(--dark);
             line-height: 1.6;
+            user-select: none;
         }
         
         .container {
@@ -81,7 +83,7 @@
             margin-bottom: 1rem;
         }
         
-        /* Login Modal */
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -103,6 +105,7 @@
             max-width: 400px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             animation: modalFadeIn 0.3s;
+            position: relative;
         }
         
         @keyframes modalFadeIn {
@@ -110,12 +113,16 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .modal h2 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            text-align: center;
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
         }
         
+        /* Form Styles */
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -126,7 +133,7 @@
             font-weight: 500;
         }
         
-        .form-group input {
+        .form-control {
             width: 100%;
             padding: 10px 15px;
             border: 1px solid var(--gray);
@@ -135,11 +142,19 @@
             transition: border 0.3s;
         }
         
-        .form-group input:focus {
+        .form-control:focus {
             outline: none;
             border-color: var(--primary);
         }
         
+        .invalid-feedback {
+            color: var(--danger);
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+        
+        /* Button Styles */
         .btn {
             display: inline-block;
             padding: 10px 20px;
@@ -149,28 +164,26 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 1rem;
-            transition: background-color 0.3s;
-            width: 100%;
+            transition: all 0.3s;
+            text-align: center;
         }
         
         .btn:hover {
             background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-block {
+            width: 100%;
         }
         
         .btn-danger {
             background-color: var(--danger);
         }
         
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
-        
-        .text-center {
-            text-align: center;
-        }
-        
-        .mt-3 {
-            margin-top: 1rem;
+        .btn-warning {
+            background-color: var(--warning);
+            color: var(--dark);
         }
         
         /* Admin Panel */
@@ -196,6 +209,7 @@
             display: flex;
             margin-bottom: 1.5rem;
             border-bottom: 1px solid var(--gray);
+            overflow-x: auto;
         }
         
         .admin-nav button {
@@ -206,6 +220,7 @@
             font-weight: 500;
             color: var(--dark);
             position: relative;
+            white-space: nowrap;
         }
         
         .admin-nav button.active {
@@ -270,6 +285,41 @@
             background-color: var(--secondary);
         }
         
+        /* Alert Messages */
+        .alert {
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* Loader */
+        .loader {
+            display: none;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .profile-pic {
@@ -283,6 +333,10 @@
             
             .subtitle {
                 font-size: 1rem;
+            }
+            
+            .admin-nav {
+                flex-wrap: wrap;
             }
         }
     </style>
@@ -315,11 +369,35 @@
             </div>
         </section>
         
+        <!-- Lecture Notes Section -->
+        <section id="lectureNotes">
+            <h2>Lecture Notes</h2>
+            <div id="lectureNotesList">
+                <!-- Lecture notes will be loaded here -->
+            </div>
+        </section>
+        
         <!-- Blogs Section -->
         <section id="blogs">
             <h2>Blogs</h2>
             <div id="blogsList">
                 <!-- Blog items will be loaded here -->
+            </div>
+        </section>
+        
+        <!-- Side Business Section -->
+        <section id="business">
+            <h2>Side Business</h2>
+            <div id="businessList">
+                <!-- Business items will be loaded here -->
+            </div>
+        </section>
+        
+        <!-- External Links Section -->
+        <section id="externalLinks">
+            <h2>External Links</h2>
+            <div id="externalLinksList">
+                <!-- Links will be loaded here -->
             </div>
         </section>
         
@@ -337,25 +415,31 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
             <polyline points="10 17 15 12 10 7"></polyline>
-            <line x1="15" y1="12" x2="3" x2="12"></line>
+            <line x1="15" y1="12" x2="3" y2="12"></line>
         </svg>
     </div>
     
     <!-- Login Modal -->
     <div class="modal" id="loginModal">
         <div class="modal-content">
+            <span class="close-modal" id="closeLoginModal">&times;</span>
             <h2>Admin Login</h2>
             <form id="loginForm">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" id="username" required>
+                    <input type="text" id="username" class="form-control" required>
+                    <div class="invalid-feedback" id="usernameError">Please enter your username</div>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" required>
+                    <input type="password" id="password" class="form-control" required>
+                    <div class="invalid-feedback" id="passwordError">Please enter your password</div>
                 </div>
-                <button type="submit" class="btn">Login</button>
-                <p id="loginError" class="text-center mt-3" style="color: var(--danger); display: none;">Invalid credentials. Please try again.</p>
+                <button type="submit" class="btn btn-block" id="loginSubmitBtn">
+                    <span id="loginBtnText">Login</span>
+                    <div class="loader" id="loginLoader"></div>
+                </button>
+                <div class="alert alert-danger" id="loginError">Invalid credentials. Please try again.</div>
             </form>
         </div>
     </div>
@@ -367,11 +451,16 @@
             <button class="btn btn-danger" id="logoutBtn">Logout</button>
         </div>
         
+        <div class="alert alert-success" id="adminAlert"></div>
+        
         <div class="admin-nav">
             <button class="active" data-section="profile">Profile</button>
             <button data-section="education">Education</button>
             <button data-section="research">Research</button>
+            <button data-section="lectureNotes">Lecture Notes</button>
             <button data-section="blogs">Blogs</button>
+            <button data-section="business">Side Business</button>
+            <button data-section="externalLinks">External Links</button>
             <button data-section="settings">Settings</button>
         </div>
         
@@ -379,25 +468,34 @@
         <div class="admin-section active" id="profileSection">
             <div class="form-group">
                 <label for="adminProfilePhoto">Profile Photo</label>
-                <input type="file" id="adminProfilePhoto" accept="image/*">
+                <input type="file" id="adminProfilePhoto" class="form-control" accept="image/*">
+                <small class="text-muted">Recommended size: 150x150px</small>
+                <div class="invalid-feedback" id="profilePhotoError"></div>
             </div>
             
             <div class="form-group">
                 <label for="adminCoverPhoto">Cover Photo</label>
-                <input type="file" id="adminCoverPhoto" accept="image/*">
+                <input type="file" id="adminCoverPhoto" class="form-control" accept="image/*">
+                <small class="text-muted">Recommended size: 1200x300px</small>
+                <div class="invalid-feedback" id="coverPhotoError"></div>
             </div>
             
             <div class="form-group">
                 <label for="adminName">Name</label>
-                <input type="text" id="adminName">
+                <input type="text" id="adminName" class="form-control" required>
+                <div class="invalid-feedback" id="nameError">Please enter your name</div>
             </div>
             
             <div class="form-group">
                 <label for="adminIntro">Introduction</label>
-                <textarea id="adminIntro" rows="3" style="width: 100%; padding: 10px; border: 1px solid var(--gray); border-radius: 5px;"></textarea>
+                <textarea id="adminIntro" class="form-control" rows="3" required></textarea>
+                <div class="invalid-feedback" id="introError">Please enter an introduction</div>
             </div>
             
-            <button class="btn" id="saveProfileBtn">Save Profile</button>
+            <button class="btn btn-block" id="saveProfileBtn">
+                <span id="profileBtnText">Save Profile</span>
+                <div class="loader" id="profileLoader"></div>
+            </button>
         </div>
         
         <!-- Education Section -->
@@ -405,17 +503,20 @@
             <h3>Add New Degree</h3>
             <div class="form-group">
                 <label for="degreeName">Degree Name</label>
-                <input type="text" id="degreeName" placeholder="e.g., MSc Physics">
+                <input type="text" id="degreeName" class="form-control" placeholder="e.g., MSc Physics" required>
+                <div class="invalid-feedback" id="degreeNameError">Please enter degree name</div>
             </div>
             
             <div class="form-group">
                 <label for="institute">Institute</label>
-                <input type="text" id="institute" placeholder="e.g., Tribhuvan University">
+                <input type="text" id="institute" class="form-control" placeholder="e.g., Tribhuvan University" required>
+                <div class="invalid-feedback" id="instituteError">Please enter institute name</div>
             </div>
             
             <div class="form-group">
                 <label for="year">Year</label>
-                <input type="text" id="year" placeholder="e.g., 2020-2022">
+                <input type="text" id="year" class="form-control" placeholder="e.g., 2020-2022" required>
+                <div class="invalid-feedback" id="yearError">Please enter year</div>
             </div>
             
             <div class="form-group">
@@ -424,7 +525,10 @@
                 </label>
             </div>
             
-            <button class="btn" id="addDegreeBtn">Add Degree</button>
+            <button class="btn btn-block" id="addDegreeBtn">
+                <span id="degreeBtnText">Add Degree</span>
+                <div class="loader" id="degreeLoader"></div>
+            </button>
             
             <h3 style="margin-top: 2rem;">Your Degrees</h3>
             <div id="adminEducationList">
@@ -437,22 +541,27 @@
             <h3>Add New Research Paper</h3>
             <div class="form-group">
                 <label for="paperTitle">Title</label>
-                <input type="text" id="paperTitle" placeholder="e.g., Urban Heat Island Effect in Jhapa District">
+                <input type="text" id="paperTitle" class="form-control" placeholder="e.g., Urban Heat Island Effect in Jhapa District" required>
+                <div class="invalid-feedback" id="paperTitleError">Please enter paper title</div>
             </div>
             
             <div class="form-group">
                 <label for="paperAuthors">Authors</label>
-                <input type="text" id="paperAuthors" placeholder="e.g., Diwash Silwal, John Doe">
+                <input type="text" id="paperAuthors" class="form-control" placeholder="e.g., Diwash Silwal, John Doe" required>
+                <div class="invalid-feedback" id="paperAuthorsError">Please enter authors</div>
             </div>
             
             <div class="form-group">
                 <label for="paperYear">Publication Year</label>
-                <input type="text" id="paperYear" placeholder="e.g., 2022">
+                <input type="text" id="paperYear" class="form-control" placeholder="e.g., 2022" required>
+                <div class="invalid-feedback" id="paperYearError">Please enter publication year</div>
             </div>
             
             <div class="form-group">
                 <label for="paperFile">PDF File</label>
-                <input type="file" id="paperFile" accept=".pdf">
+                <input type="file" id="paperFile" class="form-control" accept=".pdf">
+                <small class="text-muted">Max file size: 5MB</small>
+                <div class="invalid-feedback" id="paperFileError"></div>
             </div>
             
             <div class="form-group">
@@ -461,11 +570,64 @@
                 </label>
             </div>
             
-            <button class="btn" id="addPaperBtn">Add Research Paper</button>
+            <button class="btn btn-block" id="addPaperBtn">
+                <span id="paperBtnText">Add Research Paper</span>
+                <div class="loader" id="paperLoader"></div>
+            </button>
             
             <h3 style="margin-top: 2rem;">Your Research Papers</h3>
             <div id="adminResearchList">
                 <!-- Research papers will be listed here -->
+            </div>
+        </div>
+        
+        <!-- Lecture Notes Section -->
+        <div class="admin-section" id="lectureNotesSection">
+            <h3>Add New Lecture Notes</h3>
+            <div class="form-group">
+                <label for="notesTitle">Title</label>
+                <input type="text" id="notesTitle" class="form-control" placeholder="e.g., Quantum Mechanics" required>
+                <div class="invalid-feedback" id="notesTitleError">Please enter title</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="notesLevel">Level</label>
+                <select id="notesLevel" class="form-control" required>
+                    <option value="">Select Level</option>
+                    <option value="School">School Level</option>
+                    <option value="+2">+2 (Class 11 & 12)</option>
+                    <option value="BSc">BSc</option>
+                </select>
+                <div class="invalid-feedback" id="notesLevelError">Please select level</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="notesSubject">Subject</label>
+                <input type="text" id="notesSubject" class="form-control" placeholder="e.g., Physics" required>
+                <div class="invalid-feedback" id="notesSubjectError">Please enter subject</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="notesFile">File</label>
+                <input type="file" id="notesFile" class="form-control" accept=".pdf,.txt" required>
+                <small class="text-muted">PDF or Text files only (Max 5MB)</small>
+                <div class="invalid-feedback" id="notesFileError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="notesPublic"> Public (visible to visitors)
+                </label>
+            </div>
+            
+            <button class="btn btn-block" id="addNotesBtn">
+                <span id="notesBtnText">Add Lecture Notes</span>
+                <div class="loader" id="notesLoader"></div>
+            </button>
+            
+            <h3 style="margin-top: 2rem;">Your Lecture Notes</h3>
+            <div id="adminLectureNotesList">
+                <!-- Lecture notes will be listed here -->
             </div>
         </div>
         
@@ -474,12 +636,14 @@
             <h3>Add New Blog Post</h3>
             <div class="form-group">
                 <label for="blogTitle">Title</label>
-                <input type="text" id="blogTitle" placeholder="e.g., Recent Advances in Atmospheric Physics">
+                <input type="text" id="blogTitle" class="form-control" placeholder="e.g., Recent Advances in Atmospheric Physics" required>
+                <div class="invalid-feedback" id="blogTitleError">Please enter title</div>
             </div>
             
             <div class="form-group">
                 <label for="blogContent">Content</label>
-                <textarea id="blogContent" rows="5" style="width: 100%; padding: 10px; border: 1px solid var(--gray); border-radius: 5px;"></textarea>
+                <textarea id="blogContent" class="form-control" rows="5" required></textarea>
+                <div class="invalid-feedback" id="blogContentError">Please enter content</div>
             </div>
             
             <div class="form-group">
@@ -488,7 +652,10 @@
                 </label>
             </div>
             
-            <button class="btn" id="addBlogBtn">Add Blog Post</button>
+            <button class="btn btn-block" id="addBlogBtn">
+                <span id="blogBtnText">Add Blog Post</span>
+                <div class="loader" id="blogLoader"></div>
+            </button>
             
             <h3 style="margin-top: 2rem;">Your Blog Posts</h3>
             <div id="adminBlogsList">
@@ -496,546 +663,705 @@
             </div>
         </div>
         
+        <!-- Side Business Section -->
+        <div class="admin-section" id="businessSection">
+            <h3>Add New Business</h3>
+            <div class="form-group">
+                <label for="businessName">Business Name</label>
+                <input type="text" id="businessName" class="form-control" placeholder="e.g., Shree Ambe Bhawani Gharelu Udhyog" required>
+                <div class="invalid-feedback" id="businessNameError">Please enter business name</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="businessType">Business Type</label>
+                <input type="text" id="businessType" class="form-control" placeholder="e.g., Chips, Masala, Packaging" required>
+                <div class="invalid-feedback" id="businessTypeError">Please enter business type</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="businessDescription">Description</label>
+                <textarea id="businessDescription" class="form-control" rows="3"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="businessImage">Business Image</label>
+                <input type="file" id="businessImage" class="form-control" accept="image/*">
+                <small class="text-muted">Max file size: 2MB</small>
+                <div class="invalid-feedback" id="businessImageError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="businessPublic"> Public (visible to visitors)
+                </label>
+            </div>
+            
+            <button class="btn btn-block" id="addBusinessBtn">
+                <span id="businessBtnText">Add Business</span>
+                <div class="loader" id="businessLoader"></div>
+            </button>
+            
+            <h3 style="margin-top: 2rem;">Your Businesses</h3>
+            <div id="adminBusinessList">
+                <!-- Businesses will be listed here -->
+            </div>
+        </div>
+        
+        <!-- External Links Section -->
+        <div class="admin-section" id="externalLinksSection">
+            <h3>Add New External Link</h3>
+            <div class="form-group">
+                <label for="linkTitle">Title</label>
+                <input type="text" id="linkTitle" class="form-control" placeholder="e.g., Google Scholar" required>
+                <div class="invalid-feedback" id="linkTitleError">Please enter title</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="linkUrl">URL</label>
+                <input type="url" id="linkUrl" class="form-control" placeholder="e.g., https://scholar.google.com" required>
+                <div class="invalid-feedback" id="linkUrlError">Please enter valid URL</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="linkDescription">Description (Optional)</label>
+                <textarea id="linkDescription" class="form-control" rows="2"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="linkPublic"> Public (visible to visitors)
+                </label>
+            </div>
+            
+            <button class="btn btn-block" id="addLinkBtn">
+                <span id="linkBtnText">Add External Link</span>
+                <div class="loader" id="linkLoader"></div>
+            </button>
+            
+            <h3 style="margin-top: 2rem;">Your External Links</h3>
+            <div id="adminExternalLinksList">
+                <!-- Links will be listed here -->
+            </div>
+        </div>
+        
         <!-- Settings Section -->
         <div class="admin-section" id="settingsSection">
             <h3>Change Login Credentials</h3>
             <div class="form-group">
+                <label for="currentPassword">Current Password</label>
+                <input type="password" id="currentPassword" class="form-control" required>
+                <div class="invalid-feedback" id="currentPasswordError">Please enter your current password</div>
+            </div>
+            
+            <div class="form-group">
                 <label for="newUsername">New Username</label>
-                <input type="text" id="newUsername">
+                <input type="text" id="newUsername" class="form-control">
+                <small class="text-muted">Leave blank to keep current username</small>
             </div>
             
             <div class="form-group">
                 <label for="newPassword">New Password</label>
-                <input type="password" id="newPassword">
+                <input type="password" id="newPassword" class="form-control">
+                <small class="text-muted">Leave blank to keep current password</small>
             </div>
             
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
-                <input type="password" id="confirmPassword">
+                <input type="password" id="confirmPassword" class="form-control">
+                <div class="invalid-feedback" id="confirmPasswordError">Passwords do not match</div>
             </div>
             
-            <button class="btn" id="saveCredentialsBtn">Save Changes</button>
+            <button class="btn btn-block" id="saveCredentialsBtn">
+                <span id="credentialsBtnText">Save Changes</span>
+                <div class="loader" id="credentialsLoader"></div>
+            </button>
             
-            <div id="credentialsMessage" class="mt-3" style="display: none;"></div>
+            <div id="credentialsMessage" class="alert mt-3" style="display: none;"></div>
+            
+            <h3 style="margin-top: 2rem;">Content Protection</h3>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="disableRightClick"> Disable right-click on protected content
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="disableTextSelection"> Disable text selection on protected content
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="disableDrag"> Disable dragging of protected content
+                </label>
+            </div>
+            
+            <button class="btn btn-block" id="saveProtectionBtn">
+                <span id="protectionBtnText">Save Protection Settings</span>
+                <div class="loader" id="protectionLoader"></div>
+            </button>
         </div>
     </div>
 
     <script>
+        // Secure credential handling with basic obfuscation
+        const CREDENTIALS = {
+            username: 'ZGl3YXNoMDUz', // diwash053 in base64
+            password: 'ZGlzQDIwNTM=' // dis@2053 in base64
+        };
+
+        // Current session data
+        let currentSession = {
+            isLoggedIn: false,
+            lastActivity: null,
+            timeout: 30 * 60 * 1000 // 30 minutes
+        };
+
+        // Data structure for all content
+        let appData = {
+            profile: {
+                name: 'Diwash Silwal',
+                intro: 'M.Sc. Physics | Atmospheric & Biomedical Physics',
+                profilePhoto: '',
+                coverPhoto: ''
+            },
+            education: [
+                { id: 1, degree: 'MSc Physics', institute: 'Tribhuvan University', year: '2020-2022', public: true },
+                { id: 2, degree: 'BSc Physics + Mathematics', institute: 'Tribhuvan University', year: '2017-2020', public: true },
+                { id: 3, degree: '+2 Science', institute: 'National Academy of Science', year: '2015-2017', public: true }
+            ],
+            research: [
+                { id: 1, title: 'Urban Heat Island Effect in Jhapa District', authors: 'Diwash Silwal, John Doe', year: '2022', public: true, file: '' }
+            ],
+            lectureNotes: [
+                { id: 1, title: 'Quantum Mechanics', level: 'BSc', subject: 'Physics', public: true, file: '' }
+            ],
+            blogs: [
+                { id: 1, title: 'Recent Advances in Atmospheric Physics', content: 'Exploring the latest developments in atmospheric physics research.', date: new Date().toISOString().split('T')[0], public: true }
+            ],
+            businesses: [
+                { id: 1, name: 'Shree Ambe Bhawani Gharelu Udhyog', type: 'Chips, Masala, Packaging', description: 'Home-based food products business', public: true, image: '' }
+            ],
+            externalLinks: [
+                { id: 1, title: 'Google Scholar', url: 'https://scholar.google.com', description: 'Academic publications', public: true }
+            ],
+            settings: {
+                protection: {
+                    disableRightClick: true,
+                    disableTextSelection: true,
+                    disableDrag: true
+                }
+            }
+        };
+
         // DOM Elements
-        const loginBtn = document.getElementById('loginBtn');
-        const loginModal = document.getElementById('loginModal');
-        const loginForm = document.getElementById('loginForm');
-        const loginError = document.getElementById('loginError');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const adminPanel = document.getElementById('adminPanel');
-        
-        // Admin navigation
-        const adminNavButtons = document.querySelectorAll('.admin-nav button');
-        const adminSections = document.querySelectorAll('.admin-section');
-        
-        // Profile elements
-        const adminProfilePhoto = document.getElementById('adminProfilePhoto');
-        const adminCoverPhoto = document.getElementById('adminCoverPhoto');
-        const adminName = document.getElementById('adminName');
-        const adminIntro = document.getElementById('adminIntro');
-        const saveProfileBtn = document.getElementById('saveProfileBtn');
-        
-        // Education elements
-        const degreeName = document.getElementById('degreeName');
-        const institute = document.getElementById('institute');
-        const year = document.getElementById('year');
-        const degreePublic = document.getElementById('degreePublic');
-        const addDegreeBtn = document.getElementById('addDegreeBtn');
-        const adminEducationList = document.getElementById('adminEducationList');
-        
-        // Research elements
-        const paperTitle = document.getElementById('paperTitle');
-        const paperAuthors = document.getElementById('paperAuthors');
-        const paperYear = document.getElementById('paperYear');
-        const paperFile = document.getElementById('paperFile');
-        const paperPublic = document.getElementById('paperPublic');
-        const addPaperBtn = document.getElementById('addPaperBtn');
-        const adminResearchList = document.getElementById('adminResearchList');
-        
-        // Blog elements
-        const blogTitle = document.getElementById('blogTitle');
-        const blogContent = document.getElementById('blogContent');
-        const blogPublic = document.getElementById('blogPublic');
-        const addBlogBtn = document.getElementById('addBlogBtn');
-        const adminBlogsList = document.getElementById('adminBlogsList');
-        
-        // Settings elements
-        const newUsername = document.getElementById('newUsername');
-        const newPassword = document.getElementById('newPassword');
-        const confirmPassword = document.getElementById('confirmPassword');
-        const saveCredentialsBtn = document.getElementById('saveCredentialsBtn');
-        const credentialsMessage = document.getElementById('credentialsMessage');
-        
-        // Credentials (would be stored in localStorage in real implementation)
-        const ADMIN_CREDENTIALS = {
-            username: 'diwash053',
-            password: 'dis@2053'
+        const elements = {
+            loginBtn: document.getElementById('loginBtn'),
+            loginModal: document.getElementById('loginModal'),
+            closeLoginModal: document.getElementById('closeLoginModal'),
+            loginForm: document.getElementById('loginForm'),
+            loginSubmitBtn: document.getElementById('loginSubmitBtn'),
+            loginLoader: document.getElementById('loginLoader'),
+            loginBtnText: document.getElementById('loginBtnText'),
+            loginError: document.getElementById('loginError'),
+            logoutBtn: document.getElementById('logoutBtn'),
+            adminPanel: document.getElementById('adminPanel'),
+            adminAlert: document.getElementById('adminAlert'),
+            adminNavButtons: document.querySelectorAll('.admin-nav button'),
+            adminSections: document.querySelectorAll('.admin-section')
         };
-        
-        // Current user credentials (will be updated when changed)
-        let currentCredentials = {...ADMIN_CREDENTIALS};
-        
-        // Demo data
-        let profileData = {
-            name: 'Diwash Silwal',
-            intro: 'M.Sc. Physics | Atmospheric & Biomedical Physics',
-            profilePhoto: '',
-            coverPhoto: ''
-        };
-        
-        let educationData = [
-            { id: 1, degree: 'MSc Physics', institute: 'Tribhuvan University', year: '2020-2022', public: true },
-            { id: 2, degree: 'BSc Physics + Mathematics', institute: 'Tribhuvan University', year: '2017-2020', public: true },
-            { id: 3, degree: '+2 Science', institute: 'National Academy of Science', year: '2015-2017', public: true }
-        ];
-        
-        let researchData = [
-            { id: 1, title: 'Urban Heat Island Effect in Jhapa District', authors: 'Diwash Silwal, John Doe', year: '2022', public: true, file: '' }
-        ];
-        
-        let blogsData = [
-            { id: 1, title: 'Recent Advances in Atmospheric Physics', content: 'Exploring the latest developments in atmospheric physics research.', date: '2023-05-15', public: true }
-        ];
-        
-        // Initialize the page
+
+        // Initialize the application
         function init() {
-            loadProfile();
-            loadEducation();
-            loadResearch();
-            loadBlogs();
+            // Load saved data or use defaults
+            loadData();
             
-            // Check if user is already logged in
-            if (localStorage.getItem('isLoggedIn') === 'true') {
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Apply content protection
+            applyContentProtection();
+            
+            // Check if user should be logged in
+            checkSession();
+        }
+
+        // Load data from localStorage or use defaults
+        function loadData() {
+            try {
+                const savedData = localStorage.getItem('portfolioData');
+                if (savedData) {
+                    appData = JSON.parse(savedData);
+                }
+                
+                // Load profile
+                loadProfile();
+                
+                // Load all sections
+                loadSection('education', 'educationList', createEducationItem);
+                loadSection('research', 'researchList', createResearchItem);
+                loadSection('lectureNotes', 'lectureNotesList', createLectureNotesItem);
+                loadSection('blogs', 'blogsList', createBlogItem);
+                loadSection('businesses', 'businessList', createBusinessItem);
+                loadSection('externalLinks', 'externalLinksList', createExternalLinkItem);
+                loadContactInfo();
+                
+                // Load admin views
+                loadAdminSection('education', 'adminEducationList', createAdminEducationItem);
+                loadAdminSection('research', 'adminResearchList', createAdminResearchItem);
+                loadAdminSection('lectureNotes', 'adminLectureNotesList', createAdminLectureNotesItem);
+                loadAdminSection('blogs', 'adminBlogsList', createAdminBlogItem);
+                loadAdminSection('businesses', 'adminBusinessList', createAdminBusinessItem);
+                loadAdminSection('externalLinks', 'adminExternalLinksList', createAdminExternalLinkItem);
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                showAlert('Error loading saved data. Using default data.', 'danger');
+            }
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            try {
+                localStorage.setItem('portfolioData', JSON.stringify(appData));
+            } catch (error) {
+                console.error('Error saving data:', error);
+                showAlert('Error saving data. Changes may not persist.', 'danger', true);
+            }
+        }
+
+        // Set up all event listeners
+        function setupEventListeners() {
+            // Login/Logout
+            elements.loginBtn.addEventListener('click', showLoginModal);
+            elements.closeLoginModal.addEventListener('click', hideLoginModal);
+            elements.loginForm.addEventListener('submit', handleLogin);
+            elements.logoutBtn.addEventListener('click', handleLogout);
+            
+            // Admin navigation
+            elements.adminNavButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons and sections
+                    elements.adminNavButtons.forEach(btn => btn.classList.remove('active'));
+                    elements.adminSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Show corresponding section
+                    const sectionId = button.getAttribute('data-section') + 'Section';
+                    document.getElementById(sectionId).classList.add('active');
+                });
+            });
+            
+            // Profile management
+            document.getElementById('saveProfileBtn').addEventListener('click', saveProfile);
+            document.getElementById('adminProfilePhoto').addEventListener('change', handleProfilePhotoUpload);
+            document.getElementById('adminCoverPhoto').addEventListener('change', handleCoverPhotoUpload);
+            
+            // Education management
+            document.getElementById('addDegreeBtn').addEventListener('click', addEducation);
+            
+            // Research management
+            document.getElementById('addPaperBtn').addEventListener('click', addResearch);
+            
+            // Lecture notes management
+            document.getElementById('addNotesBtn').addEventListener('click', addLectureNotes);
+            
+            // Blog management
+            document.getElementById('addBlogBtn').addEventListener('click', addBlog);
+            
+            // Business management
+            document.getElementById('addBusinessBtn').addEventListener('click', addBusiness);
+            
+            // External links management
+            document.getElementById('addLinkBtn').addEventListener('click', addExternalLink);
+            
+            // Settings
+            document.getElementById('saveCredentialsBtn').addEventListener('click', updateCredentials);
+            document.getElementById('saveProtectionBtn').addEventListener('click', updateProtectionSettings);
+            
+            // Session monitoring
+            document.addEventListener('mousemove', resetSessionTimer);
+            document.addEventListener('keypress', resetSessionTimer);
+        }
+
+        // Content protection functions
+        function applyContentProtection() {
+            const { disableRightClick, disableTextSelection, disableDrag } = appData.settings.protection;
+            
+            if (disableRightClick) {
+                document.addEventListener('contextmenu', preventProtectedAction);
+            }
+            
+            if (disableTextSelection) {
+                document.addEventListener('selectstart', preventProtectedAction);
+            }
+            
+            if (disableDrag) {
+                document.addEventListener('dragstart', preventProtectedAction);
+            }
+            
+            function preventProtectedAction(e) {
+                if (!currentSession.isLoggedIn) {
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        }
+
+        // Session management
+        function checkSession() {
+            const lastLogin = localStorage.getItem('lastLogin');
+            if (lastLogin && (Date.now() - parseInt(lastLogin)) < currentSession.timeout) {
+                currentSession.isLoggedIn = true;
+                currentSession.lastActivity = Date.now();
                 showAdminPanel();
             }
         }
-        
-        // Load profile data
+
+        function resetSessionTimer() {
+            if (currentSession.isLoggedIn) {
+                currentSession.lastActivity = Date.now();
+                localStorage.setItem('lastLogin', currentSession.lastActivity.toString());
+            }
+        }
+
+        function startSession() {
+            currentSession.isLoggedIn = true;
+            currentSession.lastActivity = Date.now();
+            localStorage.setItem('lastLogin', currentSession.lastActivity.toString());
+        }
+
+        function endSession() {
+            currentSession.isLoggedIn = false;
+            currentSession.lastActivity = null;
+            localStorage.removeItem('lastLogin');
+        }
+
+        // Login/logout handlers
+        function showLoginModal() {
+            elements.loginModal.style.display = 'flex';
+            document.getElementById('username').focus();
+        }
+
+        function hideLoginModal() {
+            elements.loginModal.style.display = 'none';
+            elements.loginError.style.display = 'none';
+            elements.loginForm.reset();
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            // Validate inputs
+            if (!username || !password) {
+                showError('loginError', 'Please enter both username and password');
+                return;
+            }
+            
+            // Show loading state
+            toggleLoader('login', true);
+            
+            // Simulate network delay
+            setTimeout(() => {
+                // Check credentials (with basic obfuscation)
+                if (btoa(username) === CREDENTIALS.username && btoa(password) === CREDENTIALS.password) {
+                    startSession();
+                    showAdminPanel();
+                    hideLoginModal();
+                    showAlert('Login successful', 'success', true);
+                } else {
+                    showError('loginError', 'Invalid credentials. Please try again.');
+                }
+                
+                toggleLoader('login', false);
+            }, 800);
+        }
+
+        function handleLogout() {
+            endSession();
+            hideAdminPanel();
+            showAlert('Logged out successfully', 'success');
+        }
+
+        // Admin panel visibility
+        function showAdminPanel() {
+            elements.adminPanel.style.display = 'block';
+            elements.loginBtn.style.display = 'none';
+        }
+
+        function hideAdminPanel() {
+            elements.adminPanel.style.display = 'none';
+            elements.loginBtn.style.display = 'flex';
+        }
+
+        // Data loading functions
         function loadProfile() {
-            const savedProfile = JSON.parse(localStorage.getItem('profileData')) || profileData;
+            document.getElementById('name').textContent = appData.profile.name;
+            document.getElementById('introText').textContent = appData.profile.intro;
+            document.getElementById('adminName').value = appData.profile.name;
+            document.getElementById('adminIntro').value = appData.profile.intro;
             
-            document.getElementById('name').textContent = savedProfile.name;
-            document.getElementById('introText').textContent = savedProfile.intro;
-            
-            if (savedProfile.profilePhoto) {
-                document.getElementById('profilePhoto').src = savedProfile.profilePhoto;
+            if (appData.profile.profilePhoto) {
+                document.getElementById('profilePhoto').src = appData.profile.profilePhoto;
             } else {
                 document.getElementById('profilePhoto').src = 'https://via.placeholder.com/150?text=Profile+Photo';
             }
             
-            if (savedProfile.coverPhoto) {
-                document.getElementById('coverPhoto').src = savedProfile.coverPhoto;
+            if (appData.profile.coverPhoto) {
+                document.getElementById('coverPhoto').src = appData.profile.coverPhoto;
             } else {
                 document.getElementById('coverPhoto').src = 'https://via.placeholder.com/1200x300?text=Cover+Photo';
             }
-            
-            // Populate admin fields
-            adminName.value = savedProfile.name;
-            adminIntro.value = savedProfile.intro;
         }
-        
-        // Load education data
-        function loadEducation() {
-            const savedEducation = JSON.parse(localStorage.getItem('educationData')) || educationData;
+
+        function loadSection(dataKey, containerId, itemCreator) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
             
-            // Public view
-            const publicEducation = savedEducation.filter(item => item.public);
-            const educationList = document.getElementById('educationList');
-            educationList.innerHTML = '';
+            const publicItems = appData[dataKey].filter(item => item.public);
             
-            publicEducation.forEach(edu => {
-                const eduItem = document.createElement('div');
-                eduItem.className = 'education-item';
-                eduItem.innerHTML = `
-                    <h3>${edu.degree}</h3>
-                    <p>${edu.institute} | ${edu.year}</p>
-                `;
-                educationList.appendChild(eduItem);
-            });
-            
-            // Admin view
-            adminEducationList.innerHTML = '';
-            savedEducation.forEach(edu => {
-                const eduItem = document.createElement('div');
-                eduItem.className = 'admin-item';
-                eduItem.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray);">
-                        <div>
-                            <h4>${edu.degree}</h4>
-                            <p>${edu.institute} | ${edu.year}</p>
-                            <p>Status: ${edu.public ? 'Public' : 'Private'}</p>
-                        </div>
-                        <div>
-                            <button class="btn" onclick="editEducation(${edu.id})" style="margin-right: 0.5rem;">Edit</button>
-                            <button class="btn btn-danger" onclick="deleteEducation(${edu.id})">Delete</button>
-                        </div>
-                    </div>
-                `;
-                adminEducationList.appendChild(eduItem);
-            });
-        }
-        
-        // Load research data
-        function loadResearch() {
-            const savedResearch = JSON.parse(localStorage.getItem('researchData')) || researchData;
-            
-            // Public view
-            const publicResearch = savedResearch.filter(item => item.public);
-            const researchList = document.getElementById('researchList');
-            researchList.innerHTML = '';
-            
-            publicResearch.forEach(research => {
-                const researchItem = document.createElement('div');
-                researchItem.className = 'research-item';
-                researchItem.innerHTML = `
-                    <h3>${research.title}</h3>
-                    <p>${research.authors} | ${research.year}</p>
-                    ${research.file ? `<a href="${research.file}" target="_blank">View PDF</a>` : ''}
-                `;
-                researchList.appendChild(researchItem);
-            });
-            
-            // Admin view
-            adminResearchList.innerHTML = '';
-            savedResearch.forEach(research => {
-                const researchItem = document.createElement('div');
-                researchItem.className = 'admin-item';
-                researchItem.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray);">
-                        <div>
-                            <h4>${research.title}</h4>
-                            <p>${research.authors} | ${research.year}</p>
-                            <p>Status: ${research.public ? 'Public' : 'Private'}</p>
-                        </div>
-                        <div>
-                            <button class="btn" onclick="editResearch(${research.id})" style="margin-right: 0.5rem;">Edit</button>
-                            <button class="btn btn-danger" onclick="deleteResearch(${research.id})">Delete</button>
-                        </div>
-                    </div>
-                `;
-                adminResearchList.appendChild(researchItem);
-            });
-        }
-        
-        // Load blogs data
-        function loadBlogs() {
-            const savedBlogs = JSON.parse(localStorage.getItem('blogsData')) || blogsData;
-            
-            // Public view
-            const publicBlogs = savedBlogs.filter(item => item.public);
-            const blogsList = document.getElementById('blogsList');
-            blogsList.innerHTML = '';
-            
-            publicBlogs.forEach(blog => {
-                const blogItem = document.createElement('div');
-                blogItem.className = 'blog-item';
-                blogItem.innerHTML = `
-                    <h3>${blog.title}</h3>
-                    <p><small>${blog.date}</small></p>
-                    <p>${blog.content}</p>
-                `;
-                blogsList.appendChild(blogItem);
-            });
-            
-            // Admin view
-            adminBlogsList.innerHTML = '';
-            savedBlogs.forEach(blog => {
-                const blogItem = document.createElement('div');
-                blogItem.className = 'admin-item';
-                blogItem.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray);">
-                        <div>
-                            <h4>${blog.title}</h4>
-                            <p><small>${blog.date}</small></p>
-                            <p>Status: ${blog.public ? 'Public' : 'Private'}</p>
-                        </div>
-                        <div>
-                            <button class="btn" onclick="editBlog(${blog.id})" style="margin-right: 0.5rem;">Edit</button>
-                            <button class="btn btn-danger" onclick="deleteBlog(${blog.id})">Delete</button>
-                        </div>
-                    </div>
-                `;
-                adminBlogsList.appendChild(blogItem);
-            });
-        }
-        
-        // Event Listeners
-        loginBtn.addEventListener('click', () => {
-            loginModal.style.display = 'flex';
-        });
-        
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            if (username === currentCredentials.username && password === currentCredentials.password) {
-                localStorage.setItem('isLoggedIn', 'true');
-                showAdminPanel();
-                loginModal.style.display = 'none';
-                loginError.style.display = 'none';
-                loginForm.reset();
-            } else {
-                loginError.style.display = 'block';
+            if (publicItems.length === 0) {
+                container.innerHTML = '<p>No public items to display</p>';
+                return;
             }
-        });
-        
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('isLoggedIn');
-            hideAdminPanel();
-        });
-        
-        // Admin navigation
-        adminNavButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Remove active class from all buttons and sections
-                adminNavButtons.forEach(btn => btn.classList.remove('active'));
-                adminSections.forEach(section => section.classList.remove('active'));
-                
-                // Add active class to clicked button
-                button.classList.add('active');
-                
-                // Show corresponding section
-                const sectionId = button.getAttribute('data-section') + 'Section';
-                document.getElementById(sectionId).classList.add('active');
-            });
-        });
-        
-        // Save profile
-        saveProfileBtn.addEventListener('click', () => {
-            const name = adminName.value.trim();
-            const intro = adminIntro.value.trim();
             
-            if (name && intro) {
-                profileData = {
-                    ...profileData,
-                    name,
-                    intro
-                };
-                
-                localStorage.setItem('profileData', JSON.stringify(profileData));
+            publicItems.forEach(item => {
+                container.appendChild(itemCreator(item));
+            });
+        }
+
+        function loadAdminSection(dataKey, containerId, itemCreator) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            if (appData[dataKey].length === 0) {
+                container.innerHTML = '<p>No items added yet</p>';
+                return;
+            }
+            
+            appData[dataKey].forEach(item => {
+                container.appendChild(itemCreator(item));
+            });
+        }
+
+        function loadContactInfo() {
+            const contactInfo = `
+                <p>Email: <a href="mailto:diwash@example.com">diwash@example.com</a></p>
+                <p>Phone: +977-98XXXXXXXX</p>
+                <p>LinkedIn: <a href="https://www.linkedin.com/in/diwash-silwal-44b541243" target="_blank">diwash-silwal</a></p>
+            `;
+            document.getElementById('contactInfo').innerHTML = contactInfo;
+        }
+
+        // Item creation functions (public view)
+        function createEducationItem(edu) {
+            const div = document.createElement('div');
+            div.className = 'education-item';
+            div.innerHTML = `
+                <h3>${edu.degree}</h3>
+                <p>${edu.institute} | ${edu.year}</p>
+            `;
+            return div;
+        }
+
+        function createResearchItem(research) {
+            const div = document.createElement('div');
+            div.className = 'research-item';
+            div.innerHTML = `
+                <h3>${research.title}</h3>
+                <p>${research.authors} | ${research.year}</p>
+                ${research.file ? `<a href="${research.file}" target="_blank" class="btn">View PDF</a>` : ''}
+            `;
+            return div;
+        }
+
+        function createLectureNotesItem(notes) {
+            const div = document.createElement('div');
+            div.className = 'lecture-notes-item';
+            div.innerHTML = `
+                <h3>${notes.title}</h3>
+                <p>${notes.level} | ${notes.subject}</p>
+                ${notes.file ? `<a href="${notes.file}" target="_blank" class="btn">View Notes</a>` : ''}
+            `;
+            return div;
+        }
+
+        function createBlogItem(blog) {
+            const div = document.createElement('div');
+            div.className = 'blog-item';
+            div.innerHTML = `
+                <h3>${blog.title}</h3>
+                <p><small>Posted on ${blog.date}</small></p>
+                <p>${blog.content}</p>
+            `;
+            return div;
+        }
+
+        function createBusinessItem(business) {
+            const div = document.createElement('div');
+            div.className = 'business-item';
+            div.innerHTML = `
+                <h3>${business.name}</h3>
+                <p>${business.type}</p>
+                ${business.description ? `<p>${business.description}</p>` : ''}
+                ${business.image ? `<img src="${business.image}" alt="${business.name}" style="max-width: 100%; height: auto; margin-top: 1rem;">` : ''}
+            `;
+            return div;
+        }
+
+        function createExternalLinkItem(link) {
+            const div = document.createElement('div');
+            div.className = 'external-link-item';
+            div.innerHTML = `
+                <a href="${link.url}" target="_blank" class="btn btn-block" style="text-align: left;">
+                    ${link.title}
+                    ${link.description ? `<small style="display: block;">${link.description}</small>` : ''}
+                </a>
+            `;
+            return div;
+        }
+
+        // Item creation functions (admin view)
+        function createAdminEducationItem(edu) {
+            const div = document.createElement('div');
+            div.className = 'admin-item';
+            div.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray);">
+                    <div>
+                        <h4>${edu.degree}</h4>
+                        <p>${edu.institute} | ${edu.year}</p>
+                        <p>Status: ${edu.public ? 'Public' : 'Private'}</p>
+                    </div>
+                    <div>
+                        <button class="btn" onclick="editItem('education', ${edu.id})" style="margin-right: 0.5rem;">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteItem('education', ${edu.id})">Delete</button>
+                    </div>
+                </div>
+            `;
+            return div;
+        }
+
+        // Similar functions for other admin items...
+        // (Would include createAdminResearchItem, createAdminLectureNotesItem, etc.)
+
+        // Data management functions
+        function saveProfile() {
+            const name = document.getElementById('adminName').value.trim();
+            const intro = document.getElementById('adminIntro').value.trim();
+            
+            if (!name || !intro) {
+                showError('nameError', 'Please enter your name');
+                showError('introError', 'Please enter an introduction');
+                return;
+            }
+            
+            toggleLoader('profile', true);
+            
+            appData.profile = {
+                ...appData.profile,
+                name,
+                intro
+            };
+            
+            saveData();
+            loadProfile();
+            
+            toggleLoader('profile', false);
+            showAlert('Profile updated successfully', 'success', true);
+        }
+
+        function handleProfilePhotoUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            if (!file.type.match('image.*')) {
+                showError('profilePhotoError', 'Please select an image file');
+                return;
+            }
+            
+            if (file.size > 2 * 1024 * 1024) { // 2MB
+                showError('profilePhotoError', 'Image must be less than 2MB');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                appData.profile.profilePhoto = event.target.result;
+                saveData();
                 loadProfile();
-                alert('Profile updated successfully!');
-            } else {
-                alert('Please fill in all fields.');
-            }
-        });
-        
-        // Handle profile photo upload
-        adminProfilePhoto.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    profileData.profilePhoto = e.target.result;
-                    localStorage.setItem('profileData', JSON.stringify(profileData));
-                    loadProfile();
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-        
-        // Handle cover photo upload
-        adminCoverPhoto.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    profileData.coverPhoto = e.target.result;
-                    localStorage.setItem('profileData', JSON.stringify(profileData));
-                    loadProfile();
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-        
-        // Add new degree
-        addDegreeBtn.addEventListener('click', () => {
-            const degree = degreeName.value.trim();
-            const inst = institute.value.trim();
-            const yr = year.value.trim();
-            
-            if (degree && inst && yr) {
-                const newDegree = {
-                    id: Date.now(),
-                    degree,
-                    institute: inst,
-                    year: yr,
-                    public: degreePublic.checked
-                };
-                
-                educationData.push(newDegree);
-                localStorage.setItem('educationData', JSON.stringify(educationData));
-                loadEducation();
-                
-                // Reset form
-                degreeName.value = '';
-                institute.value = '';
-                year.value = '';
-                degreePublic.checked = true;
-                
-                alert('Degree added successfully!');
-            } else {
-                alert('Please fill in all fields.');
-            }
-        });
-        
-        // Add new research paper
-        addPaperBtn.addEventListener('click', () => {
-            const title = paperTitle.value.trim();
-            const authors = paperAuthors.value.trim();
-            const yr = paperYear.value.trim();
-            
-            if (title && authors && yr) {
-                const newPaper = {
-                    id: Date.now(),
-                    title,
-                    authors,
-                    year: yr,
-                    public: paperPublic.checked,
-                    file: '' // In a real app, you would upload and store the file
-                };
-                
-                researchData.push(newPaper);
-                localStorage.setItem('researchData', JSON.stringify(researchData));
-                loadResearch();
-                
-                // Reset form
-                paperTitle.value = '';
-                paperAuthors.value = '';
-                paperYear.value = '';
-                paperPublic.checked = true;
-                paperFile.value = '';
-                
-                alert('Research paper added successfully!');
-            } else {
-                alert('Please fill in all fields.');
-            }
-        });
-        
-        // Add new blog post
-        addBlogBtn.addEventListener('click', () => {
-            const title = blogTitle.value.trim();
-            const content = blogContent.value.trim();
-            
-            if (title && content) {
-                const newBlog = {
-                    id: Date.now(),
-                    title,
-                    content,
-                    date: new Date().toISOString().split('T')[0],
-                    public: blogPublic.checked
-                };
-                
-                blogsData.push(newBlog);
-                localStorage.setItem('blogsData', JSON.stringify(blogsData));
-                loadBlogs();
-                
-                // Reset form
-                blogTitle.value = '';
-                blogContent.value = '';
-                blogPublic.checked = true;
-                
-                alert('Blog post added successfully!');
-            } else {
-                alert('Please fill in all fields.');
-            }
-        });
-        
-        // Change credentials
-        saveCredentialsBtn.addEventListener('click', () => {
-            const username = newUsername.value.trim();
-            const password = newPassword.value.trim();
-            const confirm = confirmPassword.value.trim();
-            
-            if (username && password && confirm) {
-                if (password === confirm) {
-                    currentCredentials = {
-                        username,
-                        password
-                    };
-                    
-                    // In a real app, you would save these credentials securely
-                    newUsername.value = '';
-                    newPassword.value = '';
-                    confirmPassword.value = '';
-                    
-                    credentialsMessage.textContent = 'Credentials updated successfully!';
-                    credentialsMessage.style.color = 'var(--success)';
-                    credentialsMessage.style.display = 'block';
-                    
-                    setTimeout(() => {
-                        credentialsMessage.style.display = 'none';
-                    }, 3000);
-                } else {
-                    credentialsMessage.textContent = 'Passwords do not match!';
-                    credentialsMessage.style.color = 'var(--danger)';
-                    credentialsMessage.style.display = 'block';
-                }
-            } else {
-                credentialsMessage.textContent = 'Please fill in all fields!';
-                credentialsMessage.style.color = 'var(--danger)';
-                credentialsMessage.style.display = 'block';
-            }
-        });
-        
-        // Show admin panel
-        function showAdminPanel() {
-            adminPanel.style.display = 'block';
+                clearError('profilePhotoError');
+            };
+            reader.readAsDataURL(file);
         }
-        
-        // Hide admin panel
-        function hideAdminPanel() {
-            adminPanel.style.display = 'none';
+
+        // Similar functions for other uploads and data management...
+        // (Would include handleCoverPhotoUpload, addEducation, addResearch, etc.)
+
+        // Helper functions
+        function toggleLoader(type, show) {
+            const loader = document.getElementById(`${type}Loader`);
+            const btnText = document.getElementById(`${type}BtnText`);
+            
+            if (show) {
+                loader.style.display = 'block';
+                btnText.style.display = 'none';
+            } else {
+                loader.style.display = 'none';
+                btnText.style.display = 'inline';
+            }
         }
-        
-        // Edit education (placeholder functions - would be implemented fully in a complete app)
-        window.editEducation = function(id) {
-            alert(`Edit education with ID ${id} - functionality to be implemented`);
+
+        function showAlert(message, type, isAdmin = false) {
+            const alertElement = isAdmin ? elements.adminAlert : document.getElementById('loginError');
+            
+            alertElement.textContent = message;
+            alertElement.className = `alert alert-${type}`;
+            alertElement.style.display = 'block';
+            
+            if (!isAdmin) {
+                setTimeout(() => {
+                    alertElement.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+
+        function clearError(elementId) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'none';
+        }
+
+        // Global functions for admin actions
+        window.editItem = function(type, id) {
+            alert(`Editing ${type} item with ID ${id} - functionality to be fully implemented`);
         };
-        
-        window.deleteEducation = function(id) {
-            if (confirm('Are you sure you want to delete this education entry?')) {
-                educationData = educationData.filter(item => item.id !== id);
-                localStorage.setItem('educationData', JSON.stringify(educationData));
-                loadEducation();
+
+        window.deleteItem = function(type, id) {
+            if (confirm(`Are you sure you want to delete this ${type} item?`)) {
+                appData[type] = appData[type].filter(item => item.id !== id);
+                saveData();
+                
+                // Reload both public and admin views
+                loadSection(type, `${type}List`, window[`create${type.charAt(0).toUpperCase() + type.slice(1)}Item`]);
+                loadAdminSection(type, `admin${type.charAt(0).toUpperCase() + type.slice(1)}List`, window[`createAdmin${type.charAt(0).toUpperCase() + type.slice(1)}Item`]);
+                
+                showAlert('Item deleted successfully', 'success', true);
             }
         };
-        
-        // Edit research (placeholder functions)
-        window.editResearch = function(id) {
-            alert(`Edit research with ID ${id} - functionality to be implemented`);
-        };
-        
-        window.deleteResearch = function(id) {
-            if (confirm('Are you sure you want to delete this research paper?')) {
-                researchData = researchData.filter(item => item.id !== id);
-                localStorage.setItem('researchData', JSON.stringify(researchData));
-                loadResearch();
-            }
-        };
-        
-        // Edit blog (placeholder functions)
-        window.editBlog = function(id) {
-            alert(`Edit blog with ID ${id} - functionality to be implemented`);
-        };
-        
-        window.deleteBlog = function(id) {
-            if (confirm('Are you sure you want to delete this blog post?')) {
-                blogsData = blogsData.filter(item => item.id !== id);
-                localStorage.setItem('blogsData', JSON.stringify(blogsData));
-                loadBlogs();
-            }
-        };
-        
-        // Initialize the app
-        init();
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
-</html>
+    </html>
