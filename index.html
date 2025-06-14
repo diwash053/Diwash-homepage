@@ -1699,3 +1699,119 @@
     </script>
 </body>
 </html>
+<!-- Add this right before your closing </body> tag -->
+<div class="modal" id="adminCredentialModal" style="display:none">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Change Admin Credentials</h3>
+      <button class="close-modal" onclick="hideModal('adminCredentialModal')">&times;</button>
+    </div>
+    <div class="form-container">
+      <form id="changeCredentialForm">
+        <div class="form-group">
+          <label>Current Admin Password</label>
+          <input type="password" id="currentAdminPass" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>New Username</label>
+          <input type="text" id="newAdminUser" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>New Password</label>
+          <input type="password" id="newAdminPass" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Confirm New Password</label>
+          <input type="password" id="confirmAdminPass" class="form-control" required>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn" onclick="hideModal('adminCredentialModal')">Cancel</button>
+          <button type="submit" class="btn btn-success">Update Credentials</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// Add this at the VERY END of your existing script
+// Admin credential management
+let adminCredentials = {
+  username: "admin",
+  password: "physics123"
+};
+
+// Function to show credential change modal (only for admin)
+function showCredentialModal() {
+  if(isAdmin) {
+    showModal('adminCredentialModal');
+  } else {
+    alert("Admin access required");
+  }
+}
+
+// Function to handle credential changes
+document.getElementById('changeCredentialForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const currentPass = document.getElementById('currentAdminPass').value;
+  const newUser = document.getElementById('newAdminUser').value;
+  const newPass = document.getElementById('newAdminPass').value;
+  const confirmPass = document.getElementById('confirmAdminPass').value;
+  
+  // Verify current password
+  if(currentPass !== adminCredentials.password) {
+    alert("Current password is incorrect");
+    return;
+  }
+  
+  // Verify new passwords match
+  if(newPass !== confirmPass) {
+    alert("New passwords don't match");
+    return;
+  }
+  
+  // Update credentials
+  adminCredentials.username = newUser;
+  adminCredentials.password = newPass;
+  
+  // Update localStorage
+  localStorage.setItem('adminUsername', newUser);
+  localStorage.setItem('adminPassword', newPass);
+  
+  alert("Admin credentials updated successfully!");
+  hideModal('adminCredentialModal');
+  document.getElementById('changeCredentialForm').reset();
+});
+
+// Update login check to use adminCredentials
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  
+  if(username === adminCredentials.username && password === adminCredentials.password) {
+    isAdmin = true;
+    localStorage.setItem('adminLoggedIn', 'true');
+    activateAdminMode();
+    hideModal('loginModal');
+  } else {
+    alert("Invalid credentials");
+  }
+});
+
+// Add credential change button to admin controls (if not already present)
+if(document.querySelector('.admin-controls')) {
+  const credButton = document.createElement('button');
+  credButton.className = 'admin-btn';
+  credButton.innerHTML = '<i class="fas fa-user-cog"></i> Change Credentials';
+  credButton.onclick = showCredentialModal;
+  document.querySelector('.admin-controls').appendChild(credButton);
+}
+
+// Load saved credentials if they exist
+if(localStorage.getItem('adminUsername') && localStorage.getItem('adminPassword')) {
+  adminCredentials.username = localStorage.getItem('adminUsername');
+  adminCredentials.password = localStorage.getItem('adminPassword');
+}
+</script>
