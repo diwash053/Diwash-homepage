@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diwash Silwal | Academic Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
-            --primary: #1e3c72;
-            --secondary: #2a5298;
-            --light: #f4f7f9;
-            --dark: #333;
+            --primary: #3a7bd5;
+            --secondary: #00d2ff;
+            --accent: #ff7e5f;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
             --gray: #e0e0e0;
             --success: #28a745;
             --danger: #dc3545;
             --warning: #ffc107;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
         
         * {
@@ -27,8 +31,14 @@
             font-family: 'Poppins', sans-serif;
             background-color: var(--light);
             color: var(--dark);
-            line-height: 1.6;
+            line-height: 1.7;
             user-select: none;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
         }
         
         .container {
@@ -41,46 +51,162 @@
         header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 2rem 0;
+            padding: 4rem 0 2rem;
             text-align: center;
             position: relative;
             overflow: hidden;
+            margin-bottom: 3rem;
         }
         
         .cover-photo {
             width: 100%;
-            height: 250px;
+            height: 100%;
             object-fit: cover;
             position: absolute;
             top: 0;
             left: 0;
-            opacity: 0.3;
+            opacity: 0.1;
+            z-index: 0;
         }
         
         .profile-container {
             position: relative;
             z-index: 1;
+            padding: 0 20px;
         }
         
         .profile-pic {
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid white;
-            margin: 0 auto 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            margin: 0 auto 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            z-index: 2;
+            position: relative;
+        }
+        
+        .profile-pic:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.6);
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             opacity: 0.9;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Section Styles */
+        section {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            margin: 2.5rem 0;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        section h2 {
+            color: var(--primary);
+            margin-bottom: 1.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--gray);
+            position: relative;
+        }
+        
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        /* Card Styles */
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card h3 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .card .meta {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .card .date {
+            color: #888;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            text-align: center;
+            text-decoration: none;
+            margin-top: 0.5rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
         }
         
         /* Modal Styles */
@@ -102,10 +228,12 @@
             padding: 2rem;
             border-radius: 10px;
             width: 90%;
-            max-width: 400px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
             animation: modalFadeIn 0.3s;
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         
         @keyframes modalFadeIn {
@@ -115,11 +243,16 @@
         
         .close-modal {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 15px;
+            right: 15px;
             font-size: 1.5rem;
             cursor: pointer;
             color: var(--dark);
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            color: var(--danger);
         }
         
         /* Form Styles */
@@ -135,16 +268,23 @@
         
         .form-control {
             width: 100%;
-            padding: 10px 15px;
+            padding: 12px 15px;
             border: 1px solid var(--gray);
             border-radius: 5px;
             font-size: 1rem;
-            transition: border 0.3s;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
         }
         
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
         }
         
         .invalid-feedback {
@@ -154,38 +294,6 @@
             display: none;
         }
         
-        /* Button Styles */
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s;
-            text-align: center;
-        }
-        
-        .btn:hover {
-            background-color: var(--secondary);
-            transform: translateY(-2px);
-        }
-        
-        .btn-block {
-            width: 100%;
-        }
-        
-        .btn-danger {
-            background-color: var(--danger);
-        }
-        
-        .btn-warning {
-            background-color: var(--warning);
-            color: var(--dark);
-        }
-        
         /* Admin Panel */
         .admin-panel {
             display: none;
@@ -193,7 +301,7 @@
             padding: 2rem;
             border-radius: 10px;
             margin: 2rem auto;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--box-shadow);
         }
         
         .admin-header {
@@ -213,7 +321,7 @@
         }
         
         .admin-nav button {
-            padding: 10px 20px;
+            padding: 12px 20px;
             background: none;
             border: none;
             cursor: pointer;
@@ -221,6 +329,11 @@
             color: var(--dark);
             position: relative;
             white-space: nowrap;
+            transition: var(--transition);
+        }
+        
+        .admin-nav button:hover {
+            color: var(--primary);
         }
         
         .admin-nav button.active {
@@ -234,7 +347,7 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background-color: var(--primary);
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
         }
         
         .admin-section {
@@ -245,49 +358,33 @@
             display: block;
         }
         
-        /* Content Sections */
-        section {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            margin: 2rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        section h2 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--gray);
-        }
-        
         /* Login Button */
         .login-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--primary);
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             z-index: 100;
-            transition: all 0.3s;
+            transition: var(--transition);
         }
         
         .login-btn:hover {
             transform: scale(1.1);
-            background-color: var(--secondary);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
         }
         
         /* Alert Messages */
         .alert {
-            padding: 10px 15px;
+            padding: 12px 15px;
             border-radius: 5px;
             margin-bottom: 1rem;
             display: none;
@@ -296,11 +393,13 @@
         .alert-success {
             background-color: #d4edda;
             color: #155724;
+            border-left: 4px solid var(--success);
         }
         
         .alert-danger {
             background-color: #f8d7da;
             color: #721c24;
+            border-left: 4px solid var(--danger);
         }
         
         /* Loader */
@@ -320,23 +419,56 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* Content Protection */
+        .protected-content {
+            position: relative;
+        }
+        
+        .protected-content::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            z-index: 1;
+            display: none;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .profile-pic {
-                width: 120px;
-                height: 120px;
+                width: 140px;
+                height: 140px;
             }
             
             h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
             .subtitle {
-                font-size: 1rem;
+                font-size: 1.1rem;
+            }
+            
+            section {
+                padding: 1.5rem;
             }
             
             .admin-nav {
                 flex-wrap: wrap;
+            }
+            
+            .admin-nav button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .login-btn {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
             }
         }
     </style>
@@ -353,11 +485,30 @@
     </header>
     
     <div class="container">
+        <!-- About Section -->
+        <section id="about">
+            <h2>About Me</h2>
+            <div class="card" id="aboutContent">
+                <p>Welcome to my academic portfolio. I am currently pursuing my Master's degree in Physics with a specialization in Atmospheric and Biomedical Physics. My research interests include climate modeling, urban heat islands, and medical physics applications.</p>
+            </div>
+        </section>
+        
         <!-- Education Section -->
         <section id="education">
             <h2>Education</h2>
             <div id="educationList">
-                <!-- Education items will be loaded here -->
+                <div class="card">
+                    <h3>MSc Physics</h3>
+                    <p class="meta">Tribhuvan University | 2020-2022</p>
+                </div>
+                <div class="card">
+                    <h3>BSc Physics + Mathematics</h3>
+                    <p class="meta">Tribhuvan University | 2017-2020</p>
+                </div>
+                <div class="card">
+                    <h3>+2 Science</h3>
+                    <p class="meta">National Academy of Science | 2015-2017</p>
+                </div>
             </div>
         </section>
         
@@ -365,7 +516,11 @@
         <section id="research">
             <h2>Research Papers</h2>
             <div id="researchList">
-                <!-- Research items will be loaded here -->
+                <div class="card">
+                    <h3>Urban Heat Island Effect in Jhapa District</h3>
+                    <p class="meta">Diwash Silwal, John Doe | 2022</p>
+                    <a href="#" class="btn btn-outline">View PDF</a>
+                </div>
             </div>
         </section>
         
@@ -373,7 +528,11 @@
         <section id="lectureNotes">
             <h2>Lecture Notes</h2>
             <div id="lectureNotesList">
-                <!-- Lecture notes will be loaded here -->
+                <div class="card">
+                    <h3>Quantum Mechanics</h3>
+                    <p class="meta">BSc Level | Physics</p>
+                    <a href="#" class="btn btn-outline">View Notes</a>
+                </div>
             </div>
         </section>
         
@@ -381,7 +540,11 @@
         <section id="blogs">
             <h2>Blogs</h2>
             <div id="blogsList">
-                <!-- Blog items will be loaded here -->
+                <div class="card">
+                    <h3>Recent Advances in Atmospheric Physics</h3>
+                    <p class="date">Published on June 15, 2023</p>
+                    <p>Exploring the latest developments in atmospheric physics research and their implications for climate modeling and weather prediction.</p>
+                </div>
             </div>
         </section>
         
@@ -389,7 +552,16 @@
         <section id="business">
             <h2>Side Business</h2>
             <div id="businessList">
-                <!-- Business items will be loaded here -->
+                <div class="card">
+                    <h3>Shree Ambe Bhawani Gharelu Udhyog</h3>
+                    <p class="meta">Chips, Masala, Packaging</p>
+                    <p>Home-based food products business specializing in traditional Nepali snacks and spices.</p>
+                </div>
+                <div class="card">
+                    <h3>RK Traders</h3>
+                    <p class="meta">Kirana Distributor & Dealer</p>
+                    <p>Local distribution business serving the community with daily essentials.</p>
+                </div>
             </div>
         </section>
         
@@ -397,26 +569,33 @@
         <section id="externalLinks">
             <h2>External Links</h2>
             <div id="externalLinksList">
-                <!-- Links will be loaded here -->
+                <div class="card">
+                    <a href="https://scholar.google.com" class="btn btn-block" target="_blank">
+                        <i class="fas fa-graduation-cap"></i> Google Scholar
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="https://www.linkedin.com/in/diwash-silwal-44b541243" class="btn btn-block" target="_blank">
+                        <i class="fab fa-linkedin"></i> LinkedIn Profile
+                    </a>
+                </div>
             </div>
         </section>
         
         <!-- Contact Section -->
         <section id="contact">
             <h2>Contact</h2>
-            <div id="contactInfo">
-                <!-- Contact info will be loaded here -->
+            <div id="contactInfo" class="card">
+                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:diwash@example.com">diwash@example.com</a></p>
+                <p><i class="fas fa-phone"></i> Phone: +977-98XXXXXXXX</p>
+                <p><i class="fas fa-map-marker-alt"></i> Location: Jhapa, Nepal</p>
             </div>
         </section>
     </div>
     
     <!-- Login Button -->
     <div class="login-btn" id="loginBtn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-            <polyline points="10 17 15 12 10 7"></polyline>
-            <line x1="15" y1="12" x2="3" y2="12"></line>
-        </svg>
+        <i class="fas fa-lock"></i>
     </div>
     
     <!-- Login Modal -->
@@ -469,14 +648,14 @@
             <div class="form-group">
                 <label for="adminProfilePhoto">Profile Photo</label>
                 <input type="file" id="adminProfilePhoto" class="form-control" accept="image/*">
-                <small class="text-muted">Recommended size: 150x150px</small>
+                <small class="text-muted">Recommended size: 180x180px (JPG/PNG)</small>
                 <div class="invalid-feedback" id="profilePhotoError"></div>
             </div>
             
             <div class="form-group">
                 <label for="adminCoverPhoto">Cover Photo</label>
                 <input type="file" id="adminCoverPhoto" class="form-control" accept="image/*">
-                <small class="text-muted">Recommended size: 1200x300px</small>
+                <small class="text-muted">Recommended size: 1200x400px (JPG/PNG)</small>
                 <div class="invalid-feedback" id="coverPhotoError"></div>
             </div>
             
@@ -490,6 +669,12 @@
                 <label for="adminIntro">Introduction</label>
                 <textarea id="adminIntro" class="form-control" rows="3" required></textarea>
                 <div class="invalid-feedback" id="introError">Please enter an introduction</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="adminAbout">About Me</label>
+                <textarea id="adminAbout" class="form-control" rows="5" required></textarea>
+                <div class="invalid-feedback" id="aboutError">Please enter about me content</div>
             </div>
             
             <button class="btn btn-block" id="saveProfileBtn">
@@ -521,7 +706,7 @@
             
             <div class="form-group">
                 <label>
-                    <input type="checkbox" id="degreePublic"> Public (visible to visitors)
+                    <input type="checkbox" id="degreePublic" checked> Public (visible to visitors)
                 </label>
             </div>
             
@@ -566,7 +751,7 @@
             
             <div class="form-group">
                 <label>
-                    <input type="checkbox" id="paperPublic"> Public (visible to visitors)
+                    <input type="checkbox" id="paperPublic" checked> Public (visible to visitors)
                 </label>
             </div>
             
@@ -616,7 +801,7 @@
             
             <div class="form-group">
                 <label>
-                    <input type="checkbox" id="notesPublic"> Public (visible to visitors)
+                    <input type="checkbox" id="notesPublic" checked> Public (visible to visitors)
                 </label>
             </div>
             
@@ -648,7 +833,7 @@
             
             <div class="form-group">
                 <label>
-                    <input type="checkbox" id="blogPublic"> Public (visible to visitors)
+                    <input type="checkbox" id="blogPublic" checked> Public (visible to visitors)
                 </label>
             </div>
             
@@ -692,7 +877,7 @@
             
             <div class="form-group">
                 <label>
-                    <input type="checkbox" id="businessPublic"> Public (visible to visitors)
+                    <input type="checkbox" id="businessPublic" checked> Public (visible to visitors)
                 </label>
             </div>
             
@@ -729,7 +914,7 @@
             
             <div class="form-group">
                 <label>
-                    <input type="checkbox" id="linkPublic"> Public (visible to visitors)
+                    <input type="checkbox" id="linkPublic" checked> Public (visible to visitors)
                 </label>
             </div>
             
@@ -781,19 +966,19 @@
             <h3 style="margin-top: 2rem;">Content Protection</h3>
             <div class="form-group">
                 <label>
-                    <input type="checkbox" id="disableRightClick"> Disable right-click on protected content
+                    <input type="checkbox" id="disableRightClick" checked> Disable right-click on protected content
                 </label>
             </div>
             
             <div class="form-group">
                 <label>
-                    <input type="checkbox" id="disableTextSelection"> Disable text selection on protected content
+                    <input type="checkbox" id="disableTextSelection" checked> Disable text selection on protected content
                 </label>
             </div>
             
             <div class="form-group">
                 <label>
-                    <input type="checkbox" id="disableDrag"> Disable dragging of protected content
+                    <input type="checkbox" id="disableDrag" checked> Disable dragging of protected content
                 </label>
             </div>
             
@@ -823,6 +1008,7 @@
             profile: {
                 name: 'Diwash Silwal',
                 intro: 'M.Sc. Physics | Atmospheric & Biomedical Physics',
+                about: 'Welcome to my academic portfolio. I am currently pursuing my Master\'s degree in Physics with a specialization in Atmospheric and Biomedical Physics. My research interests include climate modeling, urban heat islands, and medical physics applications.',
                 profilePhoto: '',
                 coverPhoto: ''
             },
@@ -838,13 +1024,15 @@
                 { id: 1, title: 'Quantum Mechanics', level: 'BSc', subject: 'Physics', public: true, file: '' }
             ],
             blogs: [
-                { id: 1, title: 'Recent Advances in Atmospheric Physics', content: 'Exploring the latest developments in atmospheric physics research.', date: new Date().toISOString().split('T')[0], public: true }
+                { id: 1, title: 'Recent Advances in Atmospheric Physics', content: 'Exploring the latest developments in atmospheric physics research and their implications for climate modeling and weather prediction.', date: new Date().toISOString().split('T')[0], public: true }
             ],
             businesses: [
-                { id: 1, name: 'Shree Ambe Bhawani Gharelu Udhyog', type: 'Chips, Masala, Packaging', description: 'Home-based food products business', public: true, image: '' }
+                { id: 1, name: 'Shree Ambe Bhawani Gharelu Udhyog', type: 'Chips, Masala, Packaging', description: 'Home-based food products business specializing in traditional Nepali snacks and spices.', public: true, image: '' },
+                { id: 2, name: 'RK Traders', type: 'Kirana Distributor & Dealer', description: 'Local distribution business serving the community with daily essentials.', public: true, image: '' }
             ],
             externalLinks: [
-                { id: 1, title: 'Google Scholar', url: 'https://scholar.google.com', description: 'Academic publications', public: true }
+                { id: 1, title: 'Google Scholar', url: 'https://scholar.google.com', description: '', public: true },
+                { id: 2, title: 'LinkedIn Profile', url: 'https://www.linkedin.com/in/diwash-silwal-44b541243', description: '', public: true }
             ],
             settings: {
                 protection: {
@@ -905,6 +1093,7 @@
                 loadSection('blogs', 'blogsList', createBlogItem);
                 loadSection('businesses', 'businessList', createBusinessItem);
                 loadSection('externalLinks', 'externalLinksList', createExternalLinkItem);
+                loadAboutContent();
                 loadContactInfo();
                 
                 // Load admin views
@@ -914,6 +1103,9 @@
                 loadAdminSection('blogs', 'adminBlogsList', createAdminBlogItem);
                 loadAdminSection('businesses', 'adminBusinessList', createAdminBusinessItem);
                 loadAdminSection('externalLinks', 'adminExternalLinksList', createAdminExternalLinkItem);
+                
+                // Load settings
+                loadSettings();
                 
             } catch (error) {
                 console.error('Error loading data:', error);
@@ -1011,6 +1203,13 @@
             }
         }
 
+        function loadSettings() {
+            const { disableRightClick, disableTextSelection, disableDrag } = appData.settings.protection;
+            document.getElementById('disableRightClick').checked = disableRightClick;
+            document.getElementById('disableTextSelection').checked = disableTextSelection;
+            document.getElementById('disableDrag').checked = disableDrag;
+        }
+
         // Session management
         function checkSession() {
             const lastLogin = localStorage.getItem('lastLogin');
@@ -1106,18 +1305,25 @@
             document.getElementById('introText').textContent = appData.profile.intro;
             document.getElementById('adminName').value = appData.profile.name;
             document.getElementById('adminIntro').value = appData.profile.intro;
+            document.getElementById('adminAbout').value = appData.profile.about;
             
             if (appData.profile.profilePhoto) {
                 document.getElementById('profilePhoto').src = appData.profile.profilePhoto;
             } else {
-                document.getElementById('profilePhoto').src = 'https://via.placeholder.com/150?text=Profile+Photo';
+                document.getElementById('profilePhoto').src = 'https://via.placeholder.com/180?text=Profile+Photo';
             }
             
             if (appData.profile.coverPhoto) {
                 document.getElementById('coverPhoto').src = appData.profile.coverPhoto;
             } else {
-                document.getElementById('coverPhoto').src = 'https://via.placeholder.com/1200x300?text=Cover+Photo';
+                document.getElementById('coverPhoto').src = 'https://via.placeholder.com/1200x400?text=Cover+Photo';
             }
+        }
+
+        function loadAboutContent() {
+            document.getElementById('aboutContent').innerHTML = `
+                <p>${appData.profile.about}</p>
+            `;
         }
 
         function loadSection(dataKey, containerId, itemCreator) {
@@ -1152,9 +1358,9 @@
 
         function loadContactInfo() {
             const contactInfo = `
-                <p>Email: <a href="mailto:diwash@example.com">diwash@example.com</a></p>
-                <p>Phone: +977-98XXXXXXXX</p>
-                <p>LinkedIn: <a href="https://www.linkedin.com/in/diwash-silwal-44b541243" target="_blank">diwash-silwal</a></p>
+                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:diwash@example.com">diwash@example.com</a></p>
+                <p><i class="fas fa-phone"></i> Phone: +977-98XXXXXXXX</p>
+                <p><i class="fas fa-map-marker-alt"></i> Location: Jhapa, Nepal</p>
             `;
             document.getElementById('contactInfo').innerHTML = contactInfo;
         }
@@ -1162,42 +1368,42 @@
         // Item creation functions (public view)
         function createEducationItem(edu) {
             const div = document.createElement('div');
-            div.className = 'education-item';
+            div.className = 'card';
             div.innerHTML = `
                 <h3>${edu.degree}</h3>
-                <p>${edu.institute} | ${edu.year}</p>
+                <p class="meta">${edu.institute} | ${edu.year}</p>
             `;
             return div;
         }
 
         function createResearchItem(research) {
             const div = document.createElement('div');
-            div.className = 'research-item';
+            div.className = 'card';
             div.innerHTML = `
                 <h3>${research.title}</h3>
-                <p>${research.authors} | ${research.year}</p>
-                ${research.file ? `<a href="${research.file}" target="_blank" class="btn">View PDF</a>` : ''}
+                <p class="meta">${research.authors} | ${research.year}</p>
+                ${research.file ? `<a href="${research.file}" target="_blank" class="btn btn-outline">View PDF</a>` : ''}
             `;
             return div;
         }
 
         function createLectureNotesItem(notes) {
             const div = document.createElement('div');
-            div.className = 'lecture-notes-item';
+            div.className = 'card';
             div.innerHTML = `
                 <h3>${notes.title}</h3>
-                <p>${notes.level} | ${notes.subject}</p>
-                ${notes.file ? `<a href="${notes.file}" target="_blank" class="btn">View Notes</a>` : ''}
+                <p class="meta">${notes.level} | ${notes.subject}</p>
+                ${notes.file ? `<a href="${notes.file}" target="_blank" class="btn btn-outline">View Notes</a>` : ''}
             `;
             return div;
         }
 
         function createBlogItem(blog) {
             const div = document.createElement('div');
-            div.className = 'blog-item';
+            div.className = 'card';
             div.innerHTML = `
                 <h3>${blog.title}</h3>
-                <p><small>Posted on ${blog.date}</small></p>
+                <p class="date">Posted on ${blog.date}</p>
                 <p>${blog.content}</p>
             `;
             return div;
@@ -1205,23 +1411,23 @@
 
         function createBusinessItem(business) {
             const div = document.createElement('div');
-            div.className = 'business-item';
+            div.className = 'card';
             div.innerHTML = `
                 <h3>${business.name}</h3>
-                <p>${business.type}</p>
+                <p class="meta">${business.type}</p>
                 ${business.description ? `<p>${business.description}</p>` : ''}
-                ${business.image ? `<img src="${business.image}" alt="${business.name}" style="max-width: 100%; height: auto; margin-top: 1rem;">` : ''}
+                ${business.image ? `<img src="${business.image}" alt="${business.name}" style="max-width: 100%; height: auto; margin-top: 1rem; border-radius: 5px;">` : ''}
             `;
             return div;
         }
 
         function createExternalLinkItem(link) {
             const div = document.createElement('div');
-            div.className = 'external-link-item';
+            div.className = 'card';
             div.innerHTML = `
                 <a href="${link.url}" target="_blank" class="btn btn-block" style="text-align: left;">
-                    ${link.title}
-                    ${link.description ? `<small style="display: block;">${link.description}</small>` : ''}
+                    <i class="fas fa-external-link-alt"></i> ${link.title}
+                    ${link.description ? `<small style="display: block; margin-top: 5px;">${link.description}</small>` : ''}
                 </a>
             `;
             return div;
@@ -1236,7 +1442,7 @@
                     <div>
                         <h4>${edu.degree}</h4>
                         <p>${edu.institute} | ${edu.year}</p>
-                        <p>Status: ${edu.public ? 'Public' : 'Private'}</p>
+                        <p>Status: <span style="color: ${edu.public ? 'var(--success)' : 'var(--danger)'}">${edu.public ? 'Public' : 'Private'}</span></p>
                     </div>
                     <div>
                         <button class="btn" onclick="editItem('education', ${edu.id})" style="margin-right: 0.5rem;">Edit</button>
@@ -1247,17 +1453,111 @@
             return div;
         }
 
-        // Similar functions for other admin items...
-        // (Would include createAdminResearchItem, createAdminLectureNotesItem, etc.)
+        function createAdminResearchItem(research) {
+            const div = document.createElement('div');
+            div.className = 'admin-item';
+            div.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray);">
+                    <div>
+                        <h4>${research.title}</h4>
+                        <p>${research.authors} | ${research.year}</p>
+                        <p>Status: <span style="color: ${research.public ? 'var(--success)' : 'var(--danger)'}">${research.public ? 'Public' : 'Private'}</span></p>
+                    </div>
+                    <div>
+                        <button class="btn" onclick="editItem('research', ${research.id})" style="margin-right: 0.5rem;">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteItem('research', ${research.id})">Delete</button>
+                    </div>
+                </div>
+            `;
+            return div;
+        }
+
+        function createAdminLectureNotesItem(notes) {
+            const div = document.createElement('div');
+            div.className = 'admin-item';
+            div.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray);">
+                    <div>
+                        <h4>${notes.title}</h4>
+                        <p>${notes.level} | ${notes.subject}</p>
+                        <p>Status: <span style="color: ${notes.public ? 'var(--success)' : 'var(--danger)'}">${notes.public ? 'Public' : 'Private'}</span></p>
+                    </div>
+                    <div>
+                        <button class="btn" onclick="editItem('lectureNotes', ${notes.id})" style="margin-right: 0.5rem;">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteItem('lectureNotes', ${notes.id})">Delete</button>
+                    </div>
+                </div>
+            `;
+            return div;
+        }
+
+        function createAdminBlogItem(blog) {
+            const div = document.createElement('div');
+            div.className = 'admin-item';
+            div.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray);">
+                    <div>
+                        <h4>${blog.title}</h4>
+                        <p>Posted on ${blog.date}</p>
+                        <p>Status: <span style="color: ${blog.public ? 'var(--success)' : 'var(--danger)'}">${blog.public ? 'Public' : 'Private'}</span></p>
+                    </div>
+                    <div>
+                        <button class="btn" onclick="editItem('blogs', ${blog.id})" style="margin-right: 0.5rem;">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteItem('blogs', ${blog.id})">Delete</button>
+                    </div>
+                </div>
+            `;
+            return div;
+        }
+
+        function createAdminBusinessItem(business) {
+            const div = document.createElement('div');
+            div.className = 'admin-item';
+            div.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray);">
+                    <div>
+                        <h4>${business.name}</h4>
+                        <p>${business.type}</p>
+                        <p>Status: <span style="color: ${business.public ? 'var(--success)' : 'var(--danger)'}">${business.public ? 'Public' : 'Private'}</span></p>
+                    </div>
+                    <div>
+                        <button class="btn" onclick="editItem('businesses', ${business.id})" style="margin-right: 0.5rem;">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteItem('businesses', ${business.id})">Delete</button>
+                    </div>
+                </div>
+            `;
+            return div;
+        }
+
+        function createAdminExternalLinkItem(link) {
+            const div = document.createElement('div');
+            div.className = 'admin-item';
+            div.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray);">
+                    <div>
+                        <h4>${link.title}</h4>
+                        <p>${link.url}</p>
+                        <p>Status: <span style="color: ${link.public ? 'var(--success)' : 'var(--danger)'}">${link.public ? 'Public' : 'Private'}</span></p>
+                    </div>
+                    <div>
+                        <button class="btn" onclick="editItem('externalLinks', ${link.id})" style="margin-right: 0.5rem;">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteItem('externalLinks', ${link.id})">Delete</button>
+                    </div>
+                </div>
+            `;
+            return div;
+        }
 
         // Data management functions
         function saveProfile() {
             const name = document.getElementById('adminName').value.trim();
             const intro = document.getElementById('adminIntro').value.trim();
+            const about = document.getElementById('adminAbout').value.trim();
             
-            if (!name || !intro) {
-                showError('nameError', 'Please enter your name');
-                showError('introError', 'Please enter an introduction');
+            if (!name || !intro || !about) {
+                if (!name) showError('nameError', 'Please enter your name');
+                if (!intro) showError('introError', 'Please enter an introduction');
+                if (!about) showError('aboutError', 'Please enter about me content');
                 return;
             }
             
@@ -1266,11 +1566,13 @@
             appData.profile = {
                 ...appData.profile,
                 name,
-                intro
+                intro,
+                about
             };
             
             saveData();
             loadProfile();
+            loadAboutContent();
             
             toggleLoader('profile', false);
             showAlert('Profile updated successfully', 'success', true);
@@ -1281,7 +1583,7 @@
             if (!file) return;
             
             if (!file.type.match('image.*')) {
-                showError('profilePhotoError', 'Please select an image file');
+                showError('profilePhotoError', 'Please select an image file (JPEG, PNG)');
                 return;
             }
             
@@ -1294,14 +1596,482 @@
             reader.onload = function(event) {
                 appData.profile.profilePhoto = event.target.result;
                 saveData();
-                loadProfile();
+                document.getElementById('profilePhoto').src = event.target.result;
                 clearError('profilePhotoError');
+                showAlert('Profile photo updated successfully!', 'success', true);
+            };
+            reader.onerror = function() {
+                showError('profilePhotoError', 'Error reading file. Please try again.');
             };
             reader.readAsDataURL(file);
         }
 
-        // Similar functions for other uploads and data management...
-        // (Would include handleCoverPhotoUpload, addEducation, addResearch, etc.)
+        function handleCoverPhotoUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            if (!file.type.match('image.*')) {
+                showError('coverPhotoError', 'Please select an image file (JPEG, PNG)');
+                return;
+            }
+            
+            if (file.size > 3 * 1024 * 1024) { // 3MB
+                showError('coverPhotoError', 'Image must be less than 3MB');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                appData.profile.coverPhoto = event.target.result;
+                saveData();
+                document.getElementById('coverPhoto').src = event.target.result;
+                clearError('coverPhotoError');
+                showAlert('Cover photo updated successfully!', 'success', true);
+            };
+            reader.onerror = function() {
+                showError('coverPhotoError', 'Error reading file. Please try again.');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function addEducation() {
+            const degree = document.getElementById('degreeName').value.trim();
+            const institute = document.getElementById('institute').value.trim();
+            const year = document.getElementById('year').value.trim();
+            const isPublic = document.getElementById('degreePublic').checked;
+            
+            if (!degree || !institute || !year) {
+                if (!degree) showError('degreeNameError', 'Please enter degree name');
+                if (!institute) showError('instituteError', 'Please enter institute name');
+                if (!year) showError('yearError', 'Please enter year');
+                return;
+            }
+            
+            toggleLoader('degree', true);
+            
+            const newId = appData.education.length > 0 ? Math.max(...appData.education.map(e => e.id)) + 1 : 1;
+            
+            appData.education.push({
+                id: newId,
+                degree,
+                institute,
+                year,
+                public: isPublic
+            });
+            
+            saveData();
+            
+            // Clear form
+            document.getElementById('degreeName').value = '';
+            document.getElementById('institute').value = '';
+            document.getElementById('year').value = '';
+            document.getElementById('degreePublic').checked = true;
+            
+            // Reload views
+            loadSection('education', 'educationList', createEducationItem);
+            loadAdminSection('education', 'adminEducationList', createAdminEducationItem);
+            
+            toggleLoader('degree', false);
+            showAlert('Degree added successfully', 'success', true);
+        }
+
+        function addResearch() {
+            const title = document.getElementById('paperTitle').value.trim();
+            const authors = document.getElementById('paperAuthors').value.trim();
+            const year = document.getElementById('paperYear').value.trim();
+            const fileInput = document.getElementById('paperFile');
+            const isPublic = document.getElementById('paperPublic').checked;
+            
+            if (!title || !authors || !year) {
+                if (!title) showError('paperTitleError', 'Please enter paper title');
+                if (!authors) showError('paperAuthorsError', 'Please enter authors');
+                if (!year) showError('paperYearError', 'Please enter publication year');
+                return;
+            }
+            
+            toggleLoader('paper', true);
+            
+            const newId = appData.research.length > 0 ? Math.max(...appData.research.map(r => r.id)) + 1 : 1;
+            
+            const newResearch = {
+                id: newId,
+                title,
+                authors,
+                year,
+                public: isPublic,
+                file: ''
+            };
+            
+            // Handle file upload if present
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                
+                if (!file.type.match('application.pdf')) {
+                    showError('paperFileError', 'Please select a PDF file');
+                    toggleLoader('paper', false);
+                    return;
+                }
+                
+                if (file.size > 5 * 1024 * 1024) { // 5MB
+                    showError('paperFileError', 'File must be less than 5MB');
+                    toggleLoader('paper', false);
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    newResearch.file = event.target.result;
+                    appData.research.push(newResearch);
+                    saveData();
+                    
+                    // Clear form
+                    document.getElementById('paperTitle').value = '';
+                    document.getElementById('paperAuthors').value = '';
+                    document.getElementById('paperYear').value = '';
+                    document.getElementById('paperFile').value = '';
+                    document.getElementById('paperPublic').checked = true;
+                    
+                    // Reload views
+                    loadSection('research', 'researchList', createResearchItem);
+                    loadAdminSection('research', 'adminResearchList', createAdminResearchItem);
+                    
+                    toggleLoader('paper', false);
+                    showAlert('Research paper added successfully', 'success', true);
+                };
+                reader.onerror = function() {
+                    showError('paperFileError', 'Error reading file. Please try again.');
+                    toggleLoader('paper', false);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                appData.research.push(newResearch);
+                saveData();
+                
+                // Clear form
+                document.getElementById('paperTitle').value = '';
+                document.getElementById('paperAuthors').value = '';
+                document.getElementById('paperYear').value = '';
+                document.getElementById('paperPublic').checked = true;
+                
+                // Reload views
+                loadSection('research', 'researchList', createResearchItem);
+                loadAdminSection('research', 'adminResearchList', createAdminResearchItem);
+                
+                toggleLoader('paper', false);
+                showAlert('Research paper added successfully', 'success', true);
+            }
+        }
+
+        function addLectureNotes() {
+            const title = document.getElementById('notesTitle').value.trim();
+            const level = document.getElementById('notesLevel').value;
+            const subject = document.getElementById('notesSubject').value.trim();
+            const fileInput = document.getElementById('notesFile');
+            const isPublic = document.getElementById('notesPublic').checked;
+            
+            if (!title || !level || !subject || fileInput.files.length === 0) {
+                if (!title) showError('notesTitleError', 'Please enter title');
+                if (!level) showError('notesLevelError', 'Please select level');
+                if (!subject) showError('notesSubjectError', 'Please enter subject');
+                if (fileInput.files.length === 0) showError('notesFileError', 'Please select a file');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            
+            if (!file.type.match('application.pdf') && !file.type.match('text.*')) {
+                showError('notesFileError', 'Please select a PDF or text file');
+                return;
+            }
+            
+            if (file.size > 5 * 1024 * 1024) { // 5MB
+                showError('notesFileError', 'File must be less than 5MB');
+                return;
+            }
+            
+            toggleLoader('notes', true);
+            
+            const newId = appData.lectureNotes.length > 0 ? Math.max(...appData.lectureNotes.map(n => n.id)) + 1 : 1;
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                appData.lectureNotes.push({
+                    id: newId,
+                    title,
+                    level,
+                    subject,
+                    public: isPublic,
+                    file: event.target.result
+                });
+                
+                saveData();
+                
+                // Clear form
+                document.getElementById('notesTitle').value = '';
+                document.getElementById('notesLevel').value = '';
+                document.getElementById('notesSubject').value = '';
+                document.getElementById('notesFile').value = '';
+                document.getElementById('notesPublic').checked = true;
+                
+                // Reload views
+                loadSection('lectureNotes', 'lectureNotesList', createLectureNotesItem);
+                loadAdminSection('lectureNotes', 'adminLectureNotesList', createAdminLectureNotesItem);
+                
+                toggleLoader('notes', false);
+                showAlert('Lecture notes added successfully', 'success', true);
+            };
+            reader.onerror = function() {
+                showError('notesFileError', 'Error reading file. Please try again.');
+                toggleLoader('notes', false);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function addBlog() {
+            const title = document.getElementById('blogTitle').value.trim();
+            const content = document.getElementById('blogContent').value.trim();
+            const isPublic = document.getElementById('blogPublic').checked;
+            
+            if (!title || !content) {
+                if (!title) showError('blogTitleError', 'Please enter title');
+                if (!content) showError('blogContentError', 'Please enter content');
+                return;
+            }
+            
+            toggleLoader('blog', true);
+            
+            const newId = appData.blogs.length > 0 ? Math.max(...appData.blogs.map(b => b.id)) + 1 : 1;
+            
+            appData.blogs.push({
+                id: newId,
+                title,
+                content,
+                date: new Date().toISOString().split('T')[0],
+                public: isPublic
+            });
+            
+            saveData();
+            
+            // Clear form
+            document.getElementById('blogTitle').value = '';
+            document.getElementById('blogContent').value = '';
+            document.getElementById('blogPublic').checked = true;
+            
+            // Reload views
+            loadSection('blogs', 'blogsList', createBlogItem);
+            loadAdminSection('blogs', 'adminBlogsList', createAdminBlogItem);
+            
+            toggleLoader('blog', false);
+            showAlert('Blog post added successfully', 'success', true);
+        }
+
+        function addBusiness() {
+            const name = document.getElementById('businessName').value.trim();
+            const type = document.getElementById('businessType').value.trim();
+            const description = document.getElementById('businessDescription').value.trim();
+            const fileInput = document.getElementById('businessImage');
+            const isPublic = document.getElementById('businessPublic').checked;
+            
+            if (!name || !type) {
+                if (!name) showError('businessNameError', 'Please enter business name');
+                if (!type) showError('businessTypeError', 'Please enter business type');
+                return;
+            }
+            
+            toggleLoader('business', true);
+            
+            const newId = appData.businesses.length > 0 ? Math.max(...appData.businesses.map(b => b.id)) + 1 : 1;
+            
+            const newBusiness = {
+                id: newId,
+                name,
+                type,
+                description,
+                public: isPublic,
+                image: ''
+            };
+            
+            // Handle image upload if present
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                
+                if (!file.type.match('image.*')) {
+                    showError('businessImageError', 'Please select an image file');
+                    toggleLoader('business', false);
+                    return;
+                }
+                
+                if (file.size > 2 * 1024 * 1024) { // 2MB
+                    showError('businessImageError', 'Image must be less than 2MB');
+                    toggleLoader('business', false);
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    newBusiness.image = event.target.result;
+                    appData.businesses.push(newBusiness);
+                    saveData();
+                    
+                    // Clear form
+                    document.getElementById('businessName').value = '';
+                    document.getElementById('businessType').value = '';
+                    document.getElementById('businessDescription').value = '';
+                    document.getElementById('businessImage').value = '';
+                    document.getElementById('businessPublic').checked = true;
+                    
+                    // Reload views
+                    loadSection('businesses', 'businessList', createBusinessItem);
+                    loadAdminSection('businesses', 'adminBusinessList', createAdminBusinessItem);
+                    
+                    toggleLoader('business', false);
+                    showAlert('Business added successfully', 'success', true);
+                };
+                reader.onerror = function() {
+                    showError('businessImageError', 'Error reading file. Please try again.');
+                    toggleLoader('business', false);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                appData.businesses.push(newBusiness);
+                saveData();
+                
+                // Clear form
+                document.getElementById('businessName').value = '';
+                document.getElementById('businessType').value = '';
+                document.getElementById('businessDescription').value = '';
+                document.getElementById('businessPublic').checked = true;
+                
+                // Reload views
+                loadSection('businesses', 'businessList', createBusinessItem);
+                loadAdminSection('businesses', 'adminBusinessList', createAdminBusinessItem);
+                
+                toggleLoader('business', false);
+                showAlert('Business added successfully', 'success', true);
+            }
+        }
+
+        function addExternalLink() {
+            const title = document.getElementById('linkTitle').value.trim();
+            const url = document.getElementById('linkUrl').value.trim();
+            const description = document.getElementById('linkDescription').value.trim();
+            const isPublic = document.getElementById('linkPublic').checked;
+            
+            if (!title || !url) {
+                if (!title) showError('linkTitleError', 'Please enter title');
+                if (!url) showError('linkUrlError', 'Please enter URL');
+                return;
+            }
+            
+            // Validate URL
+            try {
+                new URL(url);
+            } catch (e) {
+                showError('linkUrlError', 'Please enter a valid URL');
+                return;
+            }
+            
+            toggleLoader('link', true);
+            
+            const newId = appData.externalLinks.length > 0 ? Math.max(...appData.externalLinks.map(l => l.id)) + 1 : 1;
+            
+            appData.externalLinks.push({
+                id: newId,
+                title,
+                url,
+                description,
+                public: isPublic
+            });
+            
+            saveData();
+            
+            // Clear form
+            document.getElementById('linkTitle').value = '';
+            document.getElementById('linkUrl').value = '';
+            document.getElementById('linkDescription').value = '';
+            document.getElementById('linkPublic').checked = true;
+            
+            // Reload views
+            loadSection('externalLinks', 'externalLinksList', createExternalLinkItem);
+            loadAdminSection('externalLinks', 'adminExternalLinksList', createAdminExternalLinkItem);
+            
+            toggleLoader('link', false);
+            showAlert('External link added successfully', 'success', true);
+        }
+
+        function updateCredentials() {
+            const currentPassword = document.getElementById('currentPassword').value.trim();
+            const newUsername = document.getElementById('newUsername').value.trim();
+            const newPassword = document.getElementById('newPassword').value.trim();
+            const confirmPassword = document.getElementById('confirmPassword').value.trim();
+            
+            if (!currentPassword) {
+                showError('currentPasswordError', 'Please enter your current password');
+                return;
+            }
+            
+            // Verify current password
+            if (btoa(currentPassword) !== CREDENTIALS.password) {
+                showError('currentPasswordError', 'Incorrect current password');
+                return;
+            }
+            
+            // Check if new password matches confirmation
+            if (newPassword && newPassword !== confirmPassword) {
+                showError('confirmPasswordError', 'Passwords do not match');
+                return;
+            }
+            
+            toggleLoader('credentials', true);
+            
+            // Update credentials if provided
+            if (newUsername) {
+                CREDENTIALS.username = btoa(newUsername);
+            }
+            
+            if (newPassword) {
+                CREDENTIALS.password = btoa(newPassword);
+            }
+            
+            // Clear form
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newUsername').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            
+            toggleLoader('credentials', false);
+            
+            const message = document.getElementById('credentialsMessage');
+            message.textContent = 'Credentials updated successfully!';
+            message.className = 'alert alert-success';
+            message.style.display = 'block';
+            
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 5000);
+        }
+
+        function updateProtectionSettings() {
+            const disableRightClick = document.getElementById('disableRightClick').checked;
+            const disableTextSelection = document.getElementById('disableTextSelection').checked;
+            const disableDrag = document.getElementById('disableDrag').checked;
+            
+            toggleLoader('protection', true);
+            
+            appData.settings.protection = {
+                disableRightClick,
+                disableTextSelection,
+                disableDrag
+            };
+            
+            saveData();
+            
+            // Reapply protection
+            applyContentProtection();
+            
+            toggleLoader('protection', false);
+            showAlert('Protection settings updated successfully', 'success', true);
+        }
 
         // Helper functions
         function toggleLoader(type, show) {
@@ -1344,11 +2114,228 @@
 
         // Global functions for admin actions
         window.editItem = function(type, id) {
-            alert(`Editing ${type} item with ID ${id} - functionality to be fully implemented`);
+            const item = appData[type].find(item => item.id === id);
+            if (!item) return;
+            
+            // Create modal for editing
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close-modal" onclick="this.parentElement.parentElement.remove()">&times;</span>
+                    <h3>Edit ${type.replace(/([A-Z])/g, ' $1')}</h3>
+                    
+                    ${type === 'education' ? `
+                        <div class="form-group">
+                            <label>Degree Name</label>
+                            <input type="text" id="editDegreeName" class="form-control" value="${item.degree}">
+                        </div>
+                        <div class="form-group">
+                            <label>Institute</label>
+                            <input type="text" id="editInstitute" class="form-control" value="${item.institute}">
+                        </div>
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" id="editYear" class="form-control" value="${item.year}">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="editPublic" ${item.public ? 'checked' : ''}>
+                                Public (visible to visitors)
+                            </label>
+                        </div>
+                    ` : ''}
+                    
+                    ${type === 'research' ? `
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" id="editTitle" class="form-control" value="${item.title}">
+                        </div>
+                        <div class="form-group">
+                            <label>Authors</label>
+                            <input type="text" id="editAuthors" class="form-control" value="${item.authors}">
+                        </div>
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" id="editYear" class="form-control" value="${item.year}">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="editPublic" ${item.public ? 'checked' : ''}>
+                                Public (visible to visitors)
+                            </label>
+                        </div>
+                    ` : ''}
+                    
+                    ${type === 'lectureNotes' ? `
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" id="editTitle" class="form-control" value="${item.title}">
+                        </div>
+                        <div class="form-group">
+                            <label>Level</label>
+                            <select id="editLevel" class="form-control">
+                                <option value="School" ${item.level === 'School' ? 'selected' : ''}>School Level</option>
+                                <option value="+2" ${item.level === '+2' ? 'selected' : ''}>+2 (Class 11 & 12)</option>
+                                <option value="BSc" ${item.level === 'BSc' ? 'selected' : ''}>BSc</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" id="editSubject" class="form-control" value="${item.subject}">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="editPublic" ${item.public ? 'checked' : ''}>
+                                Public (visible to visitors)
+                            </label>
+                        </div>
+                    ` : ''}
+                    
+                    ${type === 'blogs' ? `
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" id="editTitle" class="form-control" value="${item.title}">
+                        </div>
+                        <div class="form-group">
+                            <label>Content</label>
+                            <textarea id="editContent" class="form-control" rows="5">${item.content}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="editPublic" ${item.public ? 'checked' : ''}>
+                                Public (visible to visitors)
+                            </label>
+                        </div>
+                    ` : ''}
+                    
+                    ${type === 'businesses' ? `
+                        <div class="form-group">
+                            <label>Business Name</label>
+                            <input type="text" id="editName" class="form-control" value="${item.name}">
+                        </div>
+                        <div class="form-group">
+                            <label>Business Type</label>
+                            <input type="text" id="editType" class="form-control" value="${item.type}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="editDescription" class="form-control" rows="3">${item.description || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="editPublic" ${item.public ? 'checked' : ''}>
+                                Public (visible to visitors)
+                            </label>
+                        </div>
+                    ` : ''}
+                    
+                    ${type === 'externalLinks' ? `
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" id="editTitle" class="form-control" value="${item.title}">
+                        </div>
+                        <div class="form-group">
+                            <label>URL</label>
+                            <input type="url" id="editUrl" class="form-control" value="${item.url}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description (Optional)</label>
+                            <textarea id="editDescription" class="form-control" rows="2">${item.description || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="editPublic" ${item.public ? 'checked' : ''}>
+                                Public (visible to visitors)
+                            </label>
+                        </div>
+                    ` : ''}
+                    
+                    <button class="btn" onclick="saveEditedItem('${type}', ${id})">Save Changes</button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        };
+
+        window.saveEditedItem = function(type, id) {
+            const itemIndex = appData[type].findIndex(item => item.id === id);
+            if (itemIndex === -1) return;
+            
+            if (type === 'education') {
+                appData[type][itemIndex] = {
+                    ...appData[type][itemIndex],
+                    degree: document.getElementById('editDegreeName').value,
+                    institute: document.getElementById('editInstitute').value,
+                    year: document.getElementById('editYear').value,
+                    public: document.getElementById('editPublic').checked
+                };
+            }
+            
+            if (type === 'research') {
+                appData[type][itemIndex] = {
+                    ...appData[type][itemIndex],
+                    title: document.getElementById('editTitle').value,
+                    authors: document.getElementById('editAuthors').value,
+                    year: document.getElementById('editYear').value,
+                    public: document.getElementById('editPublic').checked
+                };
+            }
+            
+            if (type === 'lectureNotes') {
+                appData[type][itemIndex] = {
+                    ...appData[type][itemIndex],
+                    title: document.getElementById('editTitle').value,
+                    level: document.getElementById('editLevel').value,
+                    subject: document.getElementById('editSubject').value,
+                    public: document.getElementById('editPublic').checked
+                };
+            }
+            
+            if (type === 'blogs') {
+                appData[type][itemIndex] = {
+                    ...appData[type][itemIndex],
+                    title: document.getElementById('editTitle').value,
+                    content: document.getElementById('editContent').value,
+                    public: document.getElementById('editPublic').checked
+                };
+            }
+            
+            if (type === 'businesses') {
+                appData[type][itemIndex] = {
+                    ...appData[type][itemIndex],
+                    name: document.getElementById('editName').value,
+                    type: document.getElementById('editType').value,
+                    description: document.getElementById('editDescription').value,
+                    public: document.getElementById('editPublic').checked
+                };
+            }
+            
+            if (type === 'externalLinks') {
+                appData[type][itemIndex] = {
+                    ...appData[type][itemIndex],
+                    title: document.getElementById('editTitle').value,
+                    url: document.getElementById('editUrl').value,
+                    description: document.getElementById('editDescription').value,
+                    public: document.getElementById('editPublic').checked
+                };
+            }
+            
+            saveData();
+            
+            // Reload both public and admin views
+            loadSection(type, `${type}List`, window[`create${type.charAt(0).toUpperCase() + type.slice(1)}Item`]);
+            loadAdminSection(type, `admin${type.charAt(0).toUpperCase() + type.slice(1)}List`, window[`createAdmin${type.charAt(0).toUpperCase() + type.slice(1)}Item`]);
+            
+            // Remove modal
+            document.querySelector('.modal').remove();
+            
+            showAlert('Item updated successfully', 'success', true);
         };
 
         window.deleteItem = function(type, id) {
-            if (confirm(`Are you sure you want to delete this ${type} item?`)) {
+            if (confirm(`Are you sure you want to delete this ${type.replace(/([A-Z])/g, ' $1')} item?`)) {
                 appData[type] = appData[type].filter(item => item.id !== id);
                 saveData();
                 
@@ -1364,4 +2351,4 @@
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
-    </html>
+</html>
